@@ -1,4 +1,4 @@
-package br.com.brienze.desafio.dock.controller;
+package br.com.brienze.desafio.dock.endpoint;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -11,7 +11,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import br.com.brienze.desafio.dock.dto.PessoaDto;
-import br.com.brienze.desafio.dock.endpoint.PessoaController;
 import br.com.brienze.desafio.dock.entity.Pessoa;
 import br.com.brienze.desafio.dock.parse.PessoaParse;
 import br.com.brienze.desafio.dock.service.PessoaService;
