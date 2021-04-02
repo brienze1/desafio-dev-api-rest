@@ -29,10 +29,10 @@ Passos concluidos de acordo com a ordem cronologica:
 	- Feature saque de conta
 	- Feature bloqueio de conta
 	- Feature extrato de transacoes
+*  Desenvolvimento do teste integrado com cucumber
 
 Proximos passos:
 
-*  Desenvolvimento do teste integrado com cucumber
 *  Desenvolvimento dos testes unitarios para a camada de delivery
 *  Desenvolvimento do controller
 *  Desenvolvimento dos testes unitarios para a camada de domain
