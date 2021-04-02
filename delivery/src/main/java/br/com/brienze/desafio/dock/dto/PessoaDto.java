@@ -2,8 +2,11 @@ package br.com.brienze.desafio.dock.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import io.swagger.annotations.ApiModelProperty;
+
 public class PessoaDto {
 
+	@ApiModelProperty(hidden = true)
 	@JsonProperty("id_pessoa")
 	private Long idPessoa;
 	

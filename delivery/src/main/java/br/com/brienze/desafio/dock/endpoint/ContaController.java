@@ -1,4 +1,4 @@
-package br.com.brienze.desafio.dock.controller;
+package br.com.brienze.desafio.dock.endpoint;
 
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;

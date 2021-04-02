@@ -1,6 +1,10 @@
-package br.com.brienze.desafio.dock.controller;
+package br.com.brienze.desafio.dock.endpoint;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -19,12 +23,15 @@ public class PessoaController {
 	@Autowired
 	private PessoaService pessoaService;
 	
-	public PessoaDto cadastro(PessoaDto pessoaDto) {
+	@PostMapping
+	public ResponseEntity<PessoaDto> cadastro(@RequestBody PessoaDto pessoaDto) {
 		Pessoa pessoa = pessoaParse.toPessoa(pessoaDto);
 		
 		Pessoa pessoaCadastrada = pessoaService.cadastro(pessoa);
 		
-		return pessoaParse.toPessoaDto(pessoaCadastrada);
+		PessoaDto pessoaDtoCadastrada = pessoaParse.toPessoaDto(pessoaCadastrada);
+		
+		return new ResponseEntity<PessoaDto>(pessoaDtoCadastrada, HttpStatus.CREATED);
 	}
 
 }

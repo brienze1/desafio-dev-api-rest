@@ -7,9 +7,11 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
+import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import br.com.brienze.desafio.dock.dto.PessoaDto;
+import br.com.brienze.desafio.dock.endpoint.PessoaController;
 import br.com.brienze.desafio.dock.entity.Pessoa;
 import br.com.brienze.desafio.dock.parse.PessoaParse;
 import br.com.brienze.desafio.dock.service.PessoaService;
@@ -56,15 +58,15 @@ public class PessoaControllerTest {
 		Mockito.when(pessoaService.cadastro(pessoa)).thenReturn(pessoaResponse);
 		Mockito.when(pessoaParse.toPessoaDto(pessoaResponse)).thenReturn(pessoaDtoResponse);
 		
-		PessoaDto pessoaDtoResponse = pessoaController.cadastro(pessoaDto);
+		ResponseEntity<PessoaDto> pessoaDtoResponse = pessoaController.cadastro(pessoaDto);
 		
 		Mockito.verify(pessoaParse).toPessoa(pessoaDto);
 		Mockito.verify(pessoaService).cadastro(pessoa);
 		Mockito.verify(pessoaParse).toPessoaDto(pessoaResponse);
 		
-		Assertions.assertEquals(pessoaDto.getCpf(), pessoaDtoResponse.getCpf());
-		Assertions.assertEquals(pessoaDto.getDataNascimento(), pessoaDtoResponse.getDataNascimento());
-		Assertions.assertEquals(pessoaDto.getNome(), pessoaDtoResponse.getNome());
-		Assertions.assertNotNull(pessoaDtoResponse.getIdPessoa());
+		Assertions.assertEquals(pessoaDto.getCpf(), pessoaDtoResponse.getBody().getCpf());
+		Assertions.assertEquals(pessoaDto.getDataNascimento(), pessoaDtoResponse.getBody().getDataNascimento());
+		Assertions.assertEquals(pessoaDto.getNome(), pessoaDtoResponse.getBody().getNome());
+		Assertions.assertNotNull(pessoaDtoResponse.getBody().getIdPessoa());
 	}
 }

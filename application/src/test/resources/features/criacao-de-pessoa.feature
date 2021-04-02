@@ -33,6 +33,7 @@ Funcionalidade: Teste de criacao de pessoa
 		Dado que exista a seguinte pessoa
 		|	cpf				|	12345678912	|
 		|	data_nascimento	|	25/01/1995	|
+		Quando for solicitada a criacao da pessoa
 		Entao deve ser retornado a mensagem de erro "nome nao pode ser nulo ou em branco"
 		E o status retornado deve ser 500
 
@@ -74,7 +75,7 @@ Funcionalidade: Teste de criacao de pessoa
 	Cenario: Pessoa nao criada erro de data de nascimento em branco
 		Dado que exista a seguinte pessoa
 		|	nome			|	Jhon Doe		|
-		|	cpf				|	123456789123	|
+		|	cpf				|	12345678912	|
 		|	data_nascimento	|					|
 		Quando for solicitada a criacao da pessoa
 		Entao deve ser retornado a mensagem de erro "data_nascimento nao pode ser nula ou em branco"
@@ -83,7 +84,7 @@ Funcionalidade: Teste de criacao de pessoa
 	Cenario: Pessoa nao criada erro de data de nascimento nula
 		Dado que exista a seguinte pessoa
 		|	nome			|	Jhon Doe		|
-		|	cpf				|	123456789123	|
+		|	cpf				|	12345678912	|
 		Quando for solicitada a criacao da pessoa
 		Entao deve ser retornado a mensagem de erro "data_nascimento nao pode ser nula ou em branco"
 		E o status retornado deve ser 500
@@ -91,7 +92,7 @@ Funcionalidade: Teste de criacao de pessoa
 	Cenario: Pessoa nao criada erro de data de nascimento fora do padrao
 		Dado que exista a seguinte pessoa
 		|	nome			|	Jhon Doe		|
-		|	cpf				|	123456789123	|
+		|	cpf				|	12345678912	|
 		|	data_nascimento	|	25-01-1995		|
 		Quando for solicitada a criacao da pessoa
 		Entao deve ser retornado a mensagem de erro "data_nascimento deve ser informada no padrao dd/MM/yyyy"

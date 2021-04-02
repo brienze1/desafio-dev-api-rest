@@ -1,6 +1,7 @@
 #Config
 server.port: 8085
 spring.profiles.active: local
+server.error.include-message: always
 
 #prometheus
 management:
