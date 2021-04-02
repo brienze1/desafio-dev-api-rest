@@ -5,26 +5,32 @@ import java.time.LocalDateTime;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import io.swagger.annotations.ApiModelProperty;
+
 public class ContaDto {
 
+	@ApiModelProperty(hidden = true)
 	@JsonProperty("id_conta")
 	private Long idConta;
 	
 	@JsonProperty("id_pessoa")
 	private Long idPessoa;
-	
+
+	@ApiModelProperty(hidden = true)
 	@JsonProperty("saldo")
 	private BigDecimal saldo;
 	
 	@JsonProperty("limite_saque_diario")
 	private BigDecimal limiteSaqueDiario;
-	
+
+	@ApiModelProperty(hidden = true)
 	@JsonProperty("flag_ativo")
 	private Boolean flagAtivo;
 	
 	@JsonProperty("tipo_conta")
 	private Integer tipoConta;
-	
+
+	@ApiModelProperty(hidden = true)
 	@JsonProperty("data_criacao")
 	private LocalDateTime dataCriacao;
 	

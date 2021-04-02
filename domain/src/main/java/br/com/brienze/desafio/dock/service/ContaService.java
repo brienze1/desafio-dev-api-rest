@@ -1,15 +1,25 @@
 package br.com.brienze.desafio.dock.service;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import br.com.brienze.desafio.dock.adapter.ContaPersistenceAdapter;
 import br.com.brienze.desafio.dock.entity.Conta;
+import br.com.brienze.desafio.dock.rules.ContaRules;
 
 @Component
 public class ContaService {
 
+	@Autowired
+	private ContaRules contaRules;
+	
+	@Autowired
+	private ContaPersistenceAdapter contaPersistence;
+	
 	public Conta cadastro(Conta conta) {
-		// TODO Auto-generated method stub
-		return null;
+		contaRules.validate(conta);
+		
+		return contaPersistence.save(conta);
 	}
 
 }

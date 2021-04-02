@@ -52,6 +52,8 @@ public class CriacaoDeContaTestSteps {
 	
 	@PostConstruct
 	public void init() {
+		pessoaRepository.deleteAll();
+		
 		typeReference = new TypeReference<Map<String, Object>>() {};
 		
 		dataMap = new HashMap<>();
@@ -73,21 +75,31 @@ public class CriacaoDeContaTestSteps {
 
 	@Dado("o {string} gerado tenha sido guardado")
 	public void o_gerado_tenha_sido_guardado(String campo) throws JsonMappingException, JsonProcessingException {
-		Map<String, Object> pessoaMap = mapper.readValue(mapper.writeValueAsString(responseString.getBody()), typeReference);
+		Map<String, Object> pessoaMap = mapper.readValue(responseString.getBody(), typeReference);
 		
 		dataMap.put(campo, String.valueOf(pessoaMap.get(campo)));
 	}
 	
 	@Dado("que nao exista nenhuma pessoa cadastrada para o idPessoa {int}") 
-	public void que_nao_exista_nenhuma_pessoa_cadastrada_para_o_idPessoa(Long idPessoa) {
-		pessoaRepository.deleteById(idPessoa);
+	public void que_nao_exista_nenhuma_pessoa_cadastrada_para_o_idPessoa(Integer idPessoa) {
+		try {
+			pessoaRepository.deleteById(Long.valueOf(idPessoa));
+		} catch (Exception e) {
+		}
+	}
+	
+	@Dado("o {string} {int} tenha sido guardado")
+	public void o_tenha_sido_guardado(String campo, Integer valor) {
+		dataMap.put(campo, String.valueOf(valor));
 	}
 
 	@Quando("for solicitada a criacao da conta abaixo para o id_pessoa reservado") 
 	public void for_solicitada_a_criacao_da_conta_abaixo_para_o_id_pessoa_reservado(DataTable dataTable) {
 		Map<String, String> contaMap = dataTable.asMap(String.class, String.class);
 		
-		contaDto.setLimiteSaqueDiario(BigDecimal.valueOf(Double.valueOf(contaMap.get("limite_saque_diario"))));
+		if(contaMap.containsKey("limite_saque_diario")) {
+			contaDto.setLimiteSaqueDiario(BigDecimal.valueOf(Double.valueOf(contaMap.get("limite_saque_diario"))));
+		}
 		contaDto.setTipoConta(Integer.valueOf(contaMap.get("tipo_conta")));
 		contaDto.setIdPessoa(Long.valueOf(dataMap.get("id_pessoa")));
 		
@@ -100,22 +112,24 @@ public class CriacaoDeContaTestSteps {
 		}
 	}
 	
-	@Quando("for solicitada a criacao da conta abaixo") 
-	public void for_solicitada_a_criacao_da_conta_abaixo(DataTable dataTable) {
-		Map<String, String> contaMap = dataTable.asMap(String.class, String.class);
-		
-		contaDto.setLimiteSaqueDiario(BigDecimal.valueOf(Double.valueOf(contaMap.get("limite_saque_diario"))));
-		contaDto.setTipoConta(Integer.valueOf(contaMap.get("tipo_conta")));
-		contaDto.setIdPessoa(Long.valueOf(contaMap.get("id_pessoa")));
-		
-		try {
-			response = exchange("/v1/contas", contaDto, ContaDto.class);
-			
-			Assert.assertNotNull(response);
-		} catch(HttpStatusCodeException ex) {
-			e = ex;
-		}
-	}
+//	@Quando("for solicitada a criacao da conta abaixo") 
+//	public void for_solicitada_a_criacao_da_conta_abaixo(DataTable dataTable) {
+//		Map<String, String> contaMap = dataTable.asMap(String.class, String.class);
+//		
+//		if(contaMap.containsKey("limite_saque_diario")) {
+//			contaDto.setLimiteSaqueDiario(BigDecimal.valueOf(Double.valueOf(contaMap.get("limite_saque_diario"))));
+//		}
+//		contaDto.setTipoConta(Integer.valueOf(contaMap.get("tipo_conta")));
+//		contaDto.setIdPessoa(Long.valueOf(contaMap.get("id_pessoa")));
+//		
+//		try {
+//			response = exchange("/v1/contas", contaDto, ContaDto.class);
+//			
+//			Assert.assertNotNull(response);
+//		} catch(HttpStatusCodeException ex) {
+//			e = ex;
+//		}
+//	}
 
 	@Entao("deve ser retornado o cadastro completo da conta com os campos") 
 	public void deve_ser_retornado_o_cadastro_completo_da_conta_com_os_campos(DataTable dataTable) {

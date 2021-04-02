@@ -22,4 +22,9 @@ public class PessoaService {
 		return pessoaPersistence.save(pessoa);
 	}
 
+	public Pessoa busca(Long idPessoa) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }

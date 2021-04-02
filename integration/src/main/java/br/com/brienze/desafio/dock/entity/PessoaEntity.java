@@ -1,12 +1,16 @@
 package br.com.brienze.desafio.dock.entity;
 
 import java.time.LocalDate;
+import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
@@ -26,6 +30,9 @@ public class PessoaEntity {
 	
 	@Column(name = "data_nascimento", columnDefinition = "DATE", nullable = false)
 	private LocalDate dataNascimento;
+	
+	@OneToMany(fetch = FetchType.EAGER, mappedBy="idPessoa", cascade={CascadeType.ALL})
+	private Set<ContaEntity> contas;
 
 	public Long getIdPessoa() {
 		return idPessoa;

@@ -43,7 +43,9 @@ public class PessoaRulesTest {
 	
 	@Test
 	public void validatePessoaNullTest() {
-		Assertions.assertThrows(ValidationException.class, () -> pessoaRules.validate(null), "objeto pessoa nao pode ser nulo");
+		pessoa = null;
+		
+		Assertions.assertThrows(ValidationException.class, () -> pessoaRules.validate(pessoa), "objeto pessoa nao pode ser nulo");
 	}
 	
 	@Test

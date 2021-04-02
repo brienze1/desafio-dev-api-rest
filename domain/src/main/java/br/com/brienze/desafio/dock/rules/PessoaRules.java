@@ -4,13 +4,18 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import br.com.brienze.desafio.dock.entity.Pessoa;
+import br.com.brienze.desafio.dock.exception.NotFoundException;
 import br.com.brienze.desafio.dock.exception.ValidationException;
+import br.com.brienze.desafio.dock.service.PessoaService;
 
 @Component
 public class PessoaRules {
 
 	@Autowired
 	private DateRules daterules;
+	
+	@Autowired
+	private PessoaService pessoaService;
 	
 	public boolean validate(Pessoa pessoa) {
 		if(pessoa == null) {
@@ -37,6 +42,16 @@ public class PessoaRules {
 		
 		return true;
 		
+	}
+
+	public boolean validate(Long idPessoa) {
+		Pessoa pessoa = pessoaService.busca(idPessoa);
+		
+		if(pessoa == null) {
+			throw new NotFoundException("id_pessoa nao cadastrado no sistema");
+		}
+		
+		return true;
 	}
 
 }
