@@ -21,16 +21,17 @@ Passos concluidos de acordo com a ordem cronologica:
 *  Criacao da casca do projeto (com spring boot)
 *  Criacao de documentacao via swagger
 *  Criacao dos actuators (health e prometheus)
-
-Proximos passos:
-
 *  Adicionar feature para teste integrado com cucumber
 	- Feature criacao de conta
+	- Feature criacao de pessoa
 	- Feature deposito em conta
 	- Feature consulta saldo
 	- Feature saque de conta
 	- Feature bloqueio de conta
 	- Feature extrato de transacoes
+
+Proximos passos:
+
 *  Desenvolvimento do teste integrado com cucumber
 *  Desenvolvimento dos testes unitarios para a camada de delivery
 *  Desenvolvimento do controller
