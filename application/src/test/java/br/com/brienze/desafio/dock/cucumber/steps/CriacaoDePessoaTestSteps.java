@@ -84,11 +84,11 @@ public class CriacaoDePessoaTestSteps {
 	}
 
 	@Entao("o campo {string} devera vir preenchido") 
-	public void o_campo_devera_vir_preenchido(String string) throws JsonMappingException, JsonProcessingException {
+	public void o_campo_devera_vir_preenchido(String campo) throws JsonMappingException, JsonProcessingException {
 		Map<String, Object> pessoaMap = mapper.readValue(mapper.writeValueAsString(response.getBody()), typeReference);
 	   
-		Assert.assertTrue(pessoaMap.containsKey(string));
-		Assert.assertFalse(String.valueOf(pessoaMap.get(string)).isBlank());
+		Assert.assertTrue(pessoaMap.containsKey(campo));
+		Assert.assertFalse(String.valueOf(pessoaMap.get(campo)).isBlank());
 	}
 
 	@Entao("o status retornado deve ser {int}") 

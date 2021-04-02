@@ -8,7 +8,7 @@ import cucumber.api.junit.Cucumber;
 @RunWith(Cucumber.class)
 @CucumberOptions(
 		features = "src/test/resources/features", 
-		tags = { "@CriacaoDePessoaTest" },
+		tags = { "@CriacaoDePessoaTest or @CriacaoDeContaTest or @DepositoEmContaTest or @SaqueDeContaTest or @BloqueioDeContaTest or @ConsultaSaldoTest or @ExtratoDeContaTest" },
 		plugin = "pretty")
 public class CucumberRunnerTest {
 

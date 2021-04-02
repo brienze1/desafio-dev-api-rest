@@ -17,10 +17,10 @@ Funcionalidade: Teste de extrado de conta
 		|	cpf				|	12345678912	|
 		|	data_nascimento	|	25/01/1995	|
 		E o "id_pessoa" gerado tenha sido armazenado
-		E que foi cadastrada a conta abaixo para o "id_pessoa" armazenado
-		|	tipo_conta			|	1	|
-		E o "id_conta" que foi gerado tenha sido armazenado
-		E que tenham sido feitas as seguintes transacoes no "id_conta" armazenado
+		E que foi cadastrada a conta abaixo para o id_pessoa armazenado
+		|	tipo_conta		|	1	|
+		E o "id_conta" gerado tenha sido armazenado
+		E que tenham sido feitas as seguintes transacoes no id_conta armazenado
 		|	tipo_transacao	|	valor	|	quantidade	| data 			|
 		|	deposito		|	100		|	4			| 25/01/2020	|
 		|	deposito		|	200		|	5			| 25/02/2020	|
@@ -34,22 +34,22 @@ Funcionalidade: Teste de extrado de conta
 		|	saque			|	400		|	3			| 17/02/2021	|
 		|	saque			|	500		|	7			| 20/03/2021	|
 		|	saque			|	1000	|	2			| 01/04/2021	|
-		Quando for solicitado o extrato do "id_conta" reservado com os parametros abaixo
+		Quando for solicitado o extrato do id_conta reservado com os parametros abaixo
 		|	data_inicio	|		|
 		|	data_fim	|		|
 		|	quantidade	|		|
 		|	pagina		|		|
 		Entao deve ser retornado uma lista com as transacoes
-		|	tipo_transacao	|	valor	|	quantidade	| data 			|
-		|	deposito		|	500		|	1			| 19/07/2020	|
-		|	deposito		|	1000	|	2			| 30/12/2020	|
-		|	saque			|	100		|	4			| 05/01/2021	|
-		|	saque			|	200		|	5			| 25/01/2021	|
-		|	saque			|	300		|	6			| 10/02/2021	|
-		|	saque			|	400		|	3			| 17/02/2021	|
-		|	saque			|	500		|	7			| 20/03/2021	|
-		|	saque			|	1000	|	2			| 01/04/2021	|
-		E o idConta das contas deve vir preenchido com o valor "id_conta" armazenado
+		|	valor	|	quantidade	| data 			|
+		|	500		|	1			| 19/07/2020	|
+		|	1000	|	2			| 30/12/2020	|
+		|	-100	|	4			| 05/01/2021	|
+		|	-200	|	5			| 25/01/2021	|
+		|	-300	|	6			| 10/02/2021	|
+		|	-400	|	3			| 17/02/2021	|
+		|	-500	|	7			| 20/03/2021	|
+		|	-1000	|	2			| 01/04/2021	|
+		E o id_conta das contas deve vir preenchido com o valor id_conta armazenado
 		E o status da chamada de extrato retornado deve ser 200
 	
 	Cenario: Extrato retornado com sucesso por quantidade
@@ -58,10 +58,10 @@ Funcionalidade: Teste de extrado de conta
 		|	cpf				|	12345678912	|
 		|	data_nascimento	|	25/01/1995	|
 		E o "id_pessoa" gerado tenha sido armazenado
-		E que foi cadastrada a conta abaixo para o "id_pessoa" armazenado
-		|	tipo_conta			|	1	|
-		E o "id_conta" que foi gerado tenha sido armazenado
-		E que tenham sido feitas as seguintes transacoes no "id_conta" armazenado
+		E que foi cadastrada a conta abaixo para o id_pessoa armazenado
+		|	tipo_conta		|	1	|
+		E o "id_conta" gerado tenha sido armazenado
+		E que tenham sido feitas as seguintes transacoes no id_conta armazenado
 		|	tipo_transacao	|	valor	|	quantidade	| data 			|
 		|	deposito		|	100		|	4			| 25/01/2020	|
 		|	deposito		|	200		|	5			| 25/02/2020	|
@@ -75,18 +75,18 @@ Funcionalidade: Teste de extrado de conta
 		|	saque			|	400		|	3			| 17/02/2021	|
 		|	saque			|	500		|	7			| 20/03/2021	|
 		|	saque			|	1000	|	2			| 01/04/2021	|
-		Quando for solicitado o extrato do "id_conta" reservado com os parametros abaixo
+		Quando for solicitado o extrato do id_conta reservado com os parametros abaixo
 		|	data_inicio	|		|
 		|	data_fim	|		|
 		|	quantidade	|	15	|
 		|	pagina		|		|
 		Entao deve ser retornado uma lista com as transacoes
-		|	tipo_transacao	|	valor	|	quantidade	| data 			|
-		|	saque			|	300		|	3			| 10/02/2021	|
-		|	saque			|	400		|	3			| 17/02/2021	|
-		|	saque			|	500		|	7			| 20/03/2021	|
-		|	saque			|	1000	|	2			| 01/04/2021	|
-		E o idConta das contas deve vir preenchido com o valor "id_conta" armazenado
+		|	valor	|	quantidade	| data 			|
+		|	-300	|	3			| 10/02/2021	|
+		|	-400	|	3			| 17/02/2021	|
+		|	-500	|	7			| 20/03/2021	|
+		|	-1000	|	2			| 01/04/2021	|
+		E o id_conta das contas deve vir preenchido com o valor id_conta armazenado
 		E o status da chamada de extrato retornado deve ser 200
 	
 	Cenario: Extrato retornado com sucesso por quantidade e pagina
@@ -95,10 +95,10 @@ Funcionalidade: Teste de extrado de conta
 		|	cpf				|	12345678912	|
 		|	data_nascimento	|	25/01/1995	|
 		E o "id_pessoa" gerado tenha sido armazenado
-		E que foi cadastrada a conta abaixo para o "id_pessoa" armazenado
+		E que foi cadastrada a conta abaixo para o id_pessoa armazenado
 		|	tipo_conta			|	1	|
-		E o "id_conta" que foi gerado tenha sido armazenado
-		E que tenham sido feitas as seguintes transacoes no "id_conta" armazenado
+		E o "id_conta" gerado tenha sido armazenado
+		E que tenham sido feitas as seguintes transacoes no id_conta armazenado
 		|	tipo_transacao	|	valor	|	quantidade	| data 			|
 		|	deposito		|	100		|	4			| 25/01/2020	|
 		|	deposito		|	200		|	5			| 25/02/2020	|
@@ -112,19 +112,19 @@ Funcionalidade: Teste de extrado de conta
 		|	saque			|	400		|	3			| 17/02/2021	|
 		|	saque			|	500		|	7			| 20/03/2021	|
 		|	saque			|	1000	|	2			| 01/04/2021	|
-		Quando for solicitado o extrato do "id_conta" reservado com os parametros abaixo
+		Quando for solicitado o extrato do id_conta reservado com os parametros abaixo
 		|	data_inicio	|		|
 		|	data_fim	|		|
 		|	quantidade	|	15	|
 		|	pagina		|	1	|
 		Entao deve ser retornado uma lista com as transacoes
-		|	tipo_transacao	|	valor	|	quantidade	| data 			|
-		|	deposito		|	500		|	1			| 19/07/2020	|
-		|	deposito		|	1000	|	2			| 30/12/2020	|
-		|	saque			|	100		|	4			| 05/01/2021	|
-		|	saque			|	200		|	5			| 25/01/2021	|
-		|	saque			|	300		|	3			| 10/02/2021	|
-		E o idConta das contas deve vir preenchido com o valor "id_conta" armazenado
+		|	valor	|	quantidade	| data 			|
+		|	500		|	1			| 19/07/2020	|
+		|	1000	|	2			| 30/12/2020	|
+		|	-100	|	4			| 05/01/2021	|
+		|	-200	|	5			| 25/01/2021	|
+		|	-300	|	3			| 10/02/2021	|
+		E o id_conta das contas deve vir preenchido com o valor id_conta armazenado
 		E o status da chamada de extrato retornado deve ser 200
 	
 	Cenario: Extrato retornado com sucesso por quantidade e data inicio
@@ -133,10 +133,10 @@ Funcionalidade: Teste de extrado de conta
 		|	cpf				|	12345678912	|
 		|	data_nascimento	|	25/01/1995	|
 		E o "id_pessoa" gerado tenha sido armazenado
-		E que foi cadastrada a conta abaixo para o "id_pessoa" armazenado
+		E que foi cadastrada a conta abaixo para o id_pessoa armazenado
 		|	tipo_conta			|	1	|
-		E o "id_conta" que foi gerado tenha sido armazenado
-		E que tenham sido feitas as seguintes transacoes no "id_conta" armazenado
+		E o "id_conta" gerado tenha sido armazenado
+		E que tenham sido feitas as seguintes transacoes no id_conta armazenado
 		|	tipo_transacao	|	valor	|	quantidade	| data 			|
 		|	deposito		|	100		|	4			| 25/01/2020	|
 		|	deposito		|	200		|	5			| 25/02/2020	|
@@ -150,17 +150,17 @@ Funcionalidade: Teste de extrado de conta
 		|	saque			|	400		|	3			| 17/02/2021	|
 		|	saque			|	500		|	7			| 20/03/2021	|
 		|	saque			|	1000	|	2			| 01/04/2021	|
-		Quando for solicitado o extrato do "id_conta" reservado com os parametros abaixo
+		Quando for solicitado o extrato do id_conta reservado com os parametros abaixo
 		|	data_inicio	|	17/02/2021	|
 		|	data_fim	|				|
 		|	quantidade	|	15			|
 		|	pagina		|				|
 		Entao deve ser retornado uma lista com as transacoes
-		|	tipo_transacao	|	valor	|	quantidade	| data 			|
-		|	saque			|	400		|	3			| 17/02/2021	|
-		|	saque			|	500		|	7			| 20/03/2021	|
-		|	saque			|	1000	|	2			| 01/04/2021	|
-		E o idConta das contas deve vir preenchido com o valor "id_conta" armazenado
+		|	valor	|	quantidade	| data 			|
+		|	-400	|	3			| 17/02/2021	|
+		|	-500	|	7			| 20/03/2021	|
+		|	-1000	|	2			| 01/04/2021	|
+		E o id_conta das contas deve vir preenchido com o valor id_conta armazenado
 		E o status da chamada de extrato retornado deve ser 200
 	
 	Cenario: Extrato retornado com sucesso por quantidade e data fim
@@ -169,10 +169,10 @@ Funcionalidade: Teste de extrado de conta
 		|	cpf				|	12345678912	|
 		|	data_nascimento	|	25/01/1995	|
 		E o "id_pessoa" gerado tenha sido armazenado
-		E que foi cadastrada a conta abaixo para o "id_pessoa" armazenado
+		E que foi cadastrada a conta abaixo para o id_pessoa armazenado
 		|	tipo_conta			|	1	|
-		E o "id_conta" que foi gerado tenha sido armazenado
-		E que tenham sido feitas as seguintes transacoes no "id_conta" armazenado
+		E o "id_conta" gerado tenha sido armazenado
+		E que tenham sido feitas as seguintes transacoes no id_conta armazenado
 		|	tipo_transacao	|	valor	|	quantidade	| data 			|
 		|	deposito		|	100		|	4			| 25/01/2020	|
 		|	deposito		|	200		|	5			| 25/02/2020	|
@@ -186,18 +186,18 @@ Funcionalidade: Teste de extrado de conta
 		|	saque			|	400		|	3			| 17/02/2021	|
 		|	saque			|	500		|	7			| 20/03/2021	|
 		|	saque			|	1000	|	2			| 01/04/2021	|
-		Quando for solicitado o extrato do "id_conta" reservado com os parametros abaixo
+		Quando for solicitado o extrato do id_conta reservado com os parametros abaixo
 		|	data_inicio	|				|
 		|	data_fim	|	17/02/2021	|
 		|	quantidade	|	15			|
 		|	pagina		|				|
 		Entao deve ser retornado uma lista com as transacoes
-		|	tipo_transacao	|	valor	|	quantidade	| data 			|
-		|	saque			|	100		|	1			| 05/01/2021	|
-		|	saque			|	200		|	5			| 25/01/2021	|
-		|	saque			|	300		|	6			| 10/02/2021	|
-		|	saque			|	400		|	3			| 17/02/2021	|
-		E o idConta das contas deve vir preenchido com o valor "id_conta" armazenado
+		|	valor	|	quantidade	| data 			|
+		|	-100	|	1			| 05/01/2021	|
+		|	-200	|	5			| 25/01/2021	|
+		|	-300	|	6			| 10/02/2021	|
+		|	-400	|	3			| 17/02/2021	|
+		E o id_conta das contas deve vir preenchido com o valor id_conta armazenado
 		E o status da chamada de extrato retornado deve ser 200
 	
 	Cenario: Extrato retornado com sucesso por quantidade pagina e data incio
@@ -206,10 +206,10 @@ Funcionalidade: Teste de extrado de conta
 		|	cpf				|	12345678912	|
 		|	data_nascimento	|	25/01/1995	|
 		E o "id_pessoa" gerado tenha sido armazenado
-		E que foi cadastrada a conta abaixo para o "id_pessoa" armazenado
+		E que foi cadastrada a conta abaixo para o id_pessoa armazenado
 		|	tipo_conta			|	1	|
-		E o "id_conta" que foi gerado tenha sido armazenado
-		E que tenham sido feitas as seguintes transacoes no "id_conta" armazenado
+		E o "id_conta" gerado tenha sido armazenado
+		E que tenham sido feitas as seguintes transacoes no id_conta armazenado
 		|	tipo_transacao	|	valor	|	quantidade	| data 			|
 		|	deposito		|	100		|	4			| 25/01/2020	|
 		|	deposito		|	200		|	5			| 25/02/2020	|
@@ -223,17 +223,17 @@ Funcionalidade: Teste de extrado de conta
 		|	saque			|	400		|	3			| 17/02/2021	|
 		|	saque			|	500		|	7			| 20/03/2021	|
 		|	saque			|	1000	|	2			| 01/04/2021	|
-		Quando for solicitado o extrato do "id_conta" reservado com os parametros abaixo
+		Quando for solicitado o extrato do id_conta reservado com os parametros abaixo
 		|	data_inicio	|	05/01/2021	|
 		|	data_fim	|				|
 		|	quantidade	|	15			|
 		|	pagina		|	1			|
 		Entao deve ser retornado uma lista com as transacoes
-		|	tipo_transacao	|	valor	|	quantidade	| data 			|
-		|	saque			|	100		|	4			| 05/01/2021	|
-		|	saque			|	200		|	5			| 25/01/2021	|
-		|	saque			|	300		|	3			| 10/02/2021	|
-		E o idConta das contas deve vir preenchido com o valor "id_conta" armazenado
+		|	valor		|	quantidade	| data 			|
+		|	-100		|	4			| 05/01/2021	|
+		|	-200		|	5			| 25/01/2021	|
+		|	-300		|	3			| 10/02/2021	|
+		E o id_conta das contas deve vir preenchido com o valor id_conta armazenado
 		E o status da chamada de extrato retornado deve ser 200
 	
 	Cenario: Extrato retornado com sucesso por quantidade data incio e data fim
@@ -242,10 +242,10 @@ Funcionalidade: Teste de extrado de conta
 		|	cpf				|	12345678912	|
 		|	data_nascimento	|	25/01/1995	|
 		E o "id_pessoa" gerado tenha sido armazenado
-		E que foi cadastrada a conta abaixo para o "id_pessoa" armazenado
+		E que foi cadastrada a conta abaixo para o id_pessoa armazenado
 		|	tipo_conta			|	1	|
-		E o "id_conta" que foi gerado tenha sido armazenado
-		E que tenham sido feitas as seguintes transacoes no "id_conta" armazenado
+		E o "id_conta" gerado tenha sido armazenado
+		E que tenham sido feitas as seguintes transacoes no id_conta armazenado
 		|	tipo_transacao	|	valor	|	quantidade	| data 			|
 		|	deposito		|	100		|	4			| 25/01/2020	|
 		|	deposito		|	200		|	5			| 25/02/2020	|
@@ -259,16 +259,16 @@ Funcionalidade: Teste de extrado de conta
 		|	saque			|	400		|	3			| 17/02/2021	|
 		|	saque			|	500		|	7			| 20/03/2021	|
 		|	saque			|	1000	|	2			| 01/04/2021	|
-		Quando for solicitado o extrato do "id_conta" reservado com os parametros abaixo
+		Quando for solicitado o extrato do id_conta reservado com os parametros abaixo
 		|	data_inicio	|	05/01/2021	|
 		|	data_fim	|	25/01/2021	|
 		|	quantidade	|	6			|
 		|	pagina		|				|
 		Entao deve ser retornado uma lista com as transacoes
-		|	tipo_transacao	|	valor	|	quantidade	| data 			|
-		|	saque			|	100		|	1			| 05/01/2021	|
-		|	saque			|	200		|	5			| 25/01/2021	|
-		E o idConta das contas deve vir preenchido com o valor "id_conta" armazenado
+		|	valor		|	quantidade	| data 			|
+		|	-100		|	1			| 05/01/2021	|
+		|	-200		|	5			| 25/01/2021	|
+		E o id_conta das contas deve vir preenchido com o valor id_conta armazenado
 		E o status da chamada de extrato retornado deve ser 200
 	
 	Cenario: Extrato retornado com sucesso por data incio e data fim
@@ -277,10 +277,10 @@ Funcionalidade: Teste de extrado de conta
 		|	cpf				|	12345678912	|
 		|	data_nascimento	|	25/01/1995	|
 		E o "id_pessoa" gerado tenha sido armazenado
-		E que foi cadastrada a conta abaixo para o "id_pessoa" armazenado
+		E que foi cadastrada a conta abaixo para o id_pessoa armazenado
 		|	tipo_conta			|	1	|
-		E o "id_conta" que foi gerado tenha sido armazenado
-		E que tenham sido feitas as seguintes transacoes no "id_conta" armazenado
+		E o "id_conta" gerado tenha sido armazenado
+		E que tenham sido feitas as seguintes transacoes no id_conta armazenado
 		|	tipo_transacao	|	valor	|	quantidade	| data 			|
 		|	deposito		|	100		|	4			| 25/01/2020	|
 		|	deposito		|	200		|	5			| 25/02/2020	|
@@ -294,16 +294,16 @@ Funcionalidade: Teste de extrado de conta
 		|	saque			|	400		|	3			| 17/02/2021	|
 		|	saque			|	500		|	7			| 20/03/2021	|
 		|	saque			|	1000	|	2			| 01/04/2021	|
-		Quando for solicitado o extrato do "id_conta" reservado com os parametros abaixo
+		Quando for solicitado o extrato do id_conta reservado com os parametros abaixo
 		|	data_inicio	|	05/01/2021	|
 		|	data_fim	|	25/01/2021	|
 		|	quantidade	|				|
 		|	pagina		|				|
 		Entao deve ser retornado uma lista com as transacoes
-		|	tipo_transacao	|	valor	|	quantidade	| data 			|
-		|	saque			|	100		|	4			| 05/01/2021	|
-		|	saque			|	200		|	5			| 25/01/2021	|
-		E o idConta das contas deve vir preenchido com o valor "id_conta" armazenado
+		|	valor		|	quantidade	| data 			|
+		|	-100		|	4			| 05/01/2021	|
+		|	-200		|	5			| 25/01/2021	|
+		E o id_conta das contas deve vir preenchido com o valor id_conta armazenado
 		E o status da chamada de extrato retornado deve ser 200
 	
 	Cenario: Extrato retornado com sucesso por quantidade pagina data incio e data fim
@@ -312,10 +312,10 @@ Funcionalidade: Teste de extrado de conta
 		|	cpf				|	12345678912	|
 		|	data_nascimento	|	25/01/1995	|
 		E o "id_pessoa" gerado tenha sido armazenado
-		E que foi cadastrada a conta abaixo para o "id_pessoa" armazenado
+		E que foi cadastrada a conta abaixo para o id_pessoa armazenado
 		|	tipo_conta			|	1	|
-		E o "id_conta" que foi gerado tenha sido armazenado
-		E que tenham sido feitas as seguintes transacoes no "id_conta" armazenado
+		E o "id_conta" gerado tenha sido armazenado
+		E que tenham sido feitas as seguintes transacoes no id_conta armazenado
 		|	tipo_transacao	|	valor	|	quantidade	| data 			|
 		|	deposito		|	100		|	4			| 25/01/2020	|
 		|	deposito		|	200		|	5			| 25/02/2020	|
@@ -329,20 +329,20 @@ Funcionalidade: Teste de extrado de conta
 		|	saque			|	400		|	3			| 17/02/2021	|
 		|	saque			|	500		|	7			| 20/03/2021	|
 		|	saque			|	1000	|	2			| 01/04/2021	|
-		Quando for solicitado o extrato do "id_conta" reservado com os parametros abaixo
+		Quando for solicitado o extrato do id_conta reservado com os parametros abaixo
 		|	data_inicio	|	05/01/2021	|
 		|	data_fim	|	25/01/2021	|
 		|	quantidade	|	6			|
 		|	pagina		|	1			|
 		Entao deve ser retornado uma lista com as transacoes
-		|	tipo_transacao	|	valor	|	quantidade	| data 			|
-		|	saque			|	100		|	3			| 05/01/2021	|
-		E o idConta das contas deve vir preenchido com o valor "id_conta" armazenado
+		|	valor	|	quantidade	| data 			|
+		|	-100	|	3			| 05/01/2021	|
+		E o id_conta das contas deve vir preenchido com o valor id_conta armazenado
 		E o status da chamada de extrato retornado deve ser 200
 	
 	Cenario: Extrato nao retornado id conta invalido
 		Dado que foi reservado o "id_conta" 101
-		Quando for solicitado o extrato do "id_conta" reservado com os parametros abaixo
+		Quando for solicitado o extrato do id_conta reservado com os parametros abaixo
 		|	data_inicio	|				|
 		|	data_fim	|				|
 		|	quantidade	|				|
@@ -356,10 +356,10 @@ Funcionalidade: Teste de extrado de conta
 		|	cpf				|	12345678912	|
 		|	data_nascimento	|	25/01/1995	|
 		E o "id_pessoa" gerado tenha sido armazenado
-		E que foi cadastrada a conta abaixo para o "id_pessoa" armazenado
+		E que foi cadastrada a conta abaixo para o id_pessoa armazenado
 		|	tipo_conta			|	1	|
-		E o "id_conta" que foi gerado tenha sido armazenado
-		E que tenham sido feitas as seguintes transacoes no "id_conta" armazenado
+		E o "id_conta" gerado tenha sido armazenado
+		E que tenham sido feitas as seguintes transacoes no id_conta armazenado
 		|	tipo_transacao	|	valor	|	quantidade	| data 			|
 		|	deposito		|	100		|	4			| 25/01/2020	|
 		|	deposito		|	200		|	5			| 25/02/2020	|
@@ -373,7 +373,7 @@ Funcionalidade: Teste de extrado de conta
 		|	saque			|	400		|	3			| 17/02/2021	|
 		|	saque			|	500		|	7			| 20/03/2021	|
 		|	saque			|	1000	|	2			| 01/04/2021	|
-		Quando for solicitado o extrato do "id_conta" reservado com os parametros abaixo
+		Quando for solicitado o extrato do id_conta reservado com os parametros abaixo
 		|	data_inicio	|	25/01/2021	|
 		|	data_fim	|	05/01/2021	|
 		|	quantidade	|				|
@@ -387,10 +387,10 @@ Funcionalidade: Teste de extrado de conta
 		|	cpf				|	12345678912	|
 		|	data_nascimento	|	25/01/1995	|
 		E o "id_pessoa" gerado tenha sido armazenado
-		E que foi cadastrada a conta abaixo para o "id_pessoa" armazenado
+		E que foi cadastrada a conta abaixo para o id_pessoa armazenado
 		|	tipo_conta			|	1	|
-		E o "id_conta" que foi gerado tenha sido armazenado
-		E que tenham sido feitas as seguintes transacoes no "id_conta" armazenado
+		E o "id_conta" gerado tenha sido armazenado
+		E que tenham sido feitas as seguintes transacoes no id_conta armazenado
 		|	tipo_transacao	|	valor	|	quantidade	| data 			|
 		|	deposito		|	100		|	4			| 25/01/2020	|
 		|	deposito		|	200		|	5			| 25/02/2020	|
@@ -404,7 +404,7 @@ Funcionalidade: Teste de extrado de conta
 		|	saque			|	400		|	3			| 17/02/2021	|
 		|	saque			|	500		|	7			| 20/03/2021	|
 		|	saque			|	1000	|	2			| 01/04/2021	|
-		Quando for solicitado o extrato do "id_conta" reservado com os parametros abaixo
+		Quando for solicitado o extrato do id_conta reservado com os parametros abaixo
 		|	data_inicio	|	25-01-2021	|
 		|	data_fim	|				|
 		|	quantidade	|				|
@@ -418,10 +418,10 @@ Funcionalidade: Teste de extrado de conta
 		|	cpf				|	12345678912	|
 		|	data_nascimento	|	25/01/1995	|
 		E o "id_pessoa" gerado tenha sido armazenado
-		E que foi cadastrada a conta abaixo para o "id_pessoa" armazenado
+		E que foi cadastrada a conta abaixo para o id_pessoa armazenado
 		|	tipo_conta			|	1	|
-		E o "id_conta" que foi gerado tenha sido armazenado
-		E que tenham sido feitas as seguintes transacoes no "id_conta" armazenado
+		E o "id_conta" gerado tenha sido armazenado
+		E que tenham sido feitas as seguintes transacoes no id_conta armazenado
 		|	tipo_transacao	|	valor	|	quantidade	| data 			|
 		|	deposito		|	100		|	4			| 25/01/2020	|
 		|	deposito		|	200		|	5			| 25/02/2020	|
@@ -435,7 +435,7 @@ Funcionalidade: Teste de extrado de conta
 		|	saque			|	400		|	3			| 17/02/2021	|
 		|	saque			|	500		|	7			| 20/03/2021	|
 		|	saque			|	1000	|	2			| 01/04/2021	|
-		Quando for solicitado o extrato do "id_conta" reservado com os parametros abaixo
+		Quando for solicitado o extrato do id_conta reservado com os parametros abaixo
 		|	data_inicio	|				|
 		|	data_fim	|	25-01-2021	|
 		|	quantidade	|				|
@@ -449,10 +449,10 @@ Funcionalidade: Teste de extrado de conta
 		|	cpf				|	12345678912	|
 		|	data_nascimento	|	25/01/1995	|
 		E o "id_pessoa" gerado tenha sido armazenado
-		E que foi cadastrada a conta abaixo para o "id_pessoa" armazenado
+		E que foi cadastrada a conta abaixo para o id_pessoa armazenado
 		|	tipo_conta			|	1	|
-		E o "id_conta" que foi gerado tenha sido armazenado
-		E que tenham sido feitas as seguintes transacoes no "id_conta" armazenado
+		E o "id_conta" gerado tenha sido armazenado
+		E que tenham sido feitas as seguintes transacoes no id_conta armazenado
 		|	tipo_transacao	|	valor	|	quantidade	| data 			|
 		|	deposito		|	100		|	4			| 25/01/2020	|
 		|	deposito		|	200		|	5			| 25/02/2020	|
@@ -466,7 +466,7 @@ Funcionalidade: Teste de extrado de conta
 		|	saque			|	400		|	3			| 17/02/2021	|
 		|	saque			|	500		|	7			| 20/03/2021	|
 		|	saque			|	1000	|	2			| 01/04/2021	|
-		Quando for solicitado o extrato do "id_conta" reservado com os parametros abaixo
+		Quando for solicitado o extrato do id_conta reservado com os parametros abaixo
 		|	data_inicio	|		|
 		|	data_fim	|		|
 		|	quantidade	|	-10	|
@@ -480,10 +480,10 @@ Funcionalidade: Teste de extrado de conta
 		|	cpf				|	12345678912	|
 		|	data_nascimento	|	25/01/1995	|
 		E o "id_pessoa" gerado tenha sido armazenado
-		E que foi cadastrada a conta abaixo para o "id_pessoa" armazenado
+		E que foi cadastrada a conta abaixo para o id_pessoa armazenado
 		|	tipo_conta			|	1	|
-		E o "id_conta" que foi gerado tenha sido armazenado
-		E que tenham sido feitas as seguintes transacoes no "id_conta" armazenado
+		E o "id_conta" gerado tenha sido armazenado
+		E que tenham sido feitas as seguintes transacoes no id_conta armazenado
 		|	tipo_transacao	|	valor	|	quantidade	| data 			|
 		|	deposito		|	100		|	4			| 25/01/2020	|
 		|	deposito		|	200		|	5			| 25/02/2020	|
@@ -497,7 +497,7 @@ Funcionalidade: Teste de extrado de conta
 		|	saque			|	400		|	3			| 17/02/2021	|
 		|	saque			|	500		|	7			| 20/03/2021	|
 		|	saque			|	1000	|	2			| 01/04/2021	|
-		Quando for solicitado o extrato do "id_conta" reservado com os parametros abaixo
+		Quando for solicitado o extrato do id_conta reservado com os parametros abaixo
 		|	data_inicio	|		|
 		|	data_fim	|		|
 		|	quantidade	|		|
