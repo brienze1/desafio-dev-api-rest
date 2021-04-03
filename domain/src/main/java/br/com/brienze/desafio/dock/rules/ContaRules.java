@@ -41,4 +41,16 @@ public class ContaRules {
 		return true;
 	}
 
+	public boolean validateBloqueio(Conta conta) {
+		if(conta == null) {
+			throw new ValidationException("conta nao pode ser nula");
+		}
+		
+		if(!conta.getFlagAtivo()) {
+			throw new ValidationException("id_conta ja esta bloqueado");
+		}
+		
+		return true;
+	}
+
 }

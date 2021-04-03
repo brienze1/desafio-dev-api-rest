@@ -18,7 +18,7 @@ Funcionalidade: Teste de bloqueio de conta
 		E que foi guardado o "id_conta" que foi gerado 
 		Quando for solicitado o bloqueio do id_conta reservado
 		Entao deve ser retornado os dados da conta bloqueada
-		|	limite_saque_diario	|	100		|
+		|	limite_saque_diario	|	100.00	|
 		|	tipo_conta			|	1		|
 		|	saldo				|	0.00	|
 		E o valor do campo "flag_ativo" deve ser "false"
@@ -42,7 +42,7 @@ Funcionalidade: Teste de bloqueio de conta
 	Cenario: Bloqueio de conta com erro conta nao existente
 		Dado que o id_conta 101 nao tenha sido usado em nenhum cadastro
 		Quando for solicitado o bloqueio do id_conta "101"
-		Entao deve ser retornado uma mensagem de erro com a frase "id_conta nao encontrado"
+		Entao deve ser retornado uma mensagem de erro com a frase "id_conta nao cadastrado no sistema"
 		E o valor retornado do status ser 404
 		
 		

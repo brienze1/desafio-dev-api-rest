@@ -47,4 +47,14 @@ public class ContaService {
 		return contaPersistence.save(conta);
 	}
 
+	public Conta bloqueiaConta(Long idConta) {
+		Conta conta = consulta(idConta);
+		
+		contaRules.validateBloqueio(conta);
+		
+		conta.setFlagAtivo(false);
+		
+		return contaPersistence.save(conta);
+	}
+
 }

@@ -82,7 +82,7 @@ public class BloqueioDeContaTestSteps {
 
 	@Dado("que foi guardado o {string} que foi gerado") 
 	public void que_foi_guardado_o_que_foi_gerado(String campo) throws JsonMappingException, JsonProcessingException {
-		Map<String, Object> pessoaMap = mapper.readValue(mapper.writeValueAsString(responseString.getBody()), typeReference);
+		Map<String, Object> pessoaMap = mapper.readValue(responseString.getBody(), typeReference);
 		
 		dataMap.put(campo, String.valueOf(pessoaMap.get(campo)));
 	}
@@ -123,8 +123,8 @@ public class BloqueioDeContaTestSteps {
 	public void deve_ser_retornado_os_dados_da_conta_bloqueada(DataTable dataTable) {
 		Map<String, String> contaMap = dataTable.asMap(String.class, String.class);
 		
-		Assert.assertEquals(BigDecimal.valueOf(Double.valueOf(contaMap.get("limite_saque_diario"))), response.getBody().getLimiteSaqueDiario());
-		Assert.assertEquals(BigDecimal.valueOf(Double.valueOf(contaMap.get("saldo"))), response.getBody().getSaldo());
+		Assert.assertEquals(contaMap.get("limite_saque_diario"), response.getBody().getLimiteSaqueDiario().toString());
+		Assert.assertEquals(contaMap.get("saldo"), response.getBody().getSaldo().toString());
 		Assert.assertEquals(Integer.valueOf(contaMap.get("tipo_conta")), response.getBody().getTipoConta());
 	}
 

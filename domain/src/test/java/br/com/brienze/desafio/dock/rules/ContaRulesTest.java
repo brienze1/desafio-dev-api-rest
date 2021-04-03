@@ -59,6 +59,19 @@ public class ContaRulesTest {
 	}
 	
 	@Test
+	public void validateSuccessLimiteZeroTest() {
+		conta.setLimiteSaqueDiario(null);
+		
+		Mockito.when(pessoaRules.validate(conta.getIdPessoa())).thenReturn(true);
+		
+		boolean valid = contaRules.validate(conta);
+		
+		Mockito.verify(pessoaRules).validate(conta.getIdPessoa());
+		
+		Assertions.assertTrue(valid);
+	}
+	
+	@Test
 	public void validateErrorLimiteZeroTest() {
 		conta.setLimiteSaqueDiario(BigDecimal.valueOf(0.0));
 		
@@ -89,6 +102,27 @@ public class ContaRulesTest {
 	@Test
 	public void validateIdContaErrorTest() {
 		Assertions.assertThrows(NotFoundException.class, () -> contaRules.validate(Optional.ofNullable(null)), "id_conta nao cadastrado no sistema");
+	}
+	
+	@Test
+	public void validateBloqueioSuccessTest() {
+		conta.setFlagAtivo(true);
+		
+		boolean valid = contaRules.validateBloqueio(conta);
+		
+		Assertions.assertTrue(valid);
+	}
+	
+	@Test
+	public void validateBloqueioErrorContaNulaTest() {
+		Assertions.assertThrows(ValidationException.class, () -> contaRules.validateBloqueio(null), "conta nao pode ser nula");
+	}
+	
+	@Test
+	public void validateBloqueioErrorContaJaBloqueadaTest() {
+		conta.setFlagAtivo(false);
+		
+		Assertions.assertThrows(ValidationException.class, () -> contaRules.validateBloqueio(conta), "id_conta ja esta bloqueado");
 	}
 	
 }

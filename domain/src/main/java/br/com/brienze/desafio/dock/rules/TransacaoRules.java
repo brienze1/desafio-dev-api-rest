@@ -43,7 +43,11 @@ public class TransacaoRules {
 			throw new ValidationException("id_conta nao pode ser nulo");
 		}
 		
-		contaService.consulta(transacao.getIdConta());
+		Conta conta = contaService.consulta(transacao.getIdConta());
+
+		if(!conta.getFlagAtivo()) {
+			throw new ValidationException("transacao recusada, conta bloqueada");
+		}
 		
 		if(transacao.getValor() == null) {
 			throw new ValidationException("valor nao pode ser nulo");

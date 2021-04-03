@@ -66,7 +66,7 @@ Funcionalidade: Teste de deposito em conta
 		E o "id_conta" que foi gerado tenha sido guardado
 		E que tenha sido solicitado o bloqueio do id_conta reservado
 		Quando for solicitado o "deposito" de 200.0 reais para o id_conta reservado
-		Entao deve ser retornado um erro com a seguinte mensagem "deposito recusado, conta bloqueada"
+		Entao deve ser retornado um erro com a seguinte mensagem "transacao recusada, conta bloqueada"
 		E o status da chamada retornado deve ser 500
 
 	Cenario: Deposito nao realizado conta nao existente

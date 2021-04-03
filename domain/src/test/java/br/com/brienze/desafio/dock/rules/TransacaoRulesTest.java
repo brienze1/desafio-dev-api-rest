@@ -36,6 +36,7 @@ public class TransacaoRulesTest {
 		
 		conta = new Conta();
 		conta.setSaldo(BigDecimal.valueOf(300.00));
+		conta.setFlagAtivo(true);
 	}
 	
 	@Test
@@ -65,6 +66,8 @@ public class TransacaoRulesTest {
 	
 	@Test
 	public void validateDepositoErrorValorNullTest() {
+		Mockito.when(contaService.consulta(transacao.getIdConta())).thenReturn(conta);
+		
 		transacao.setValor(null);
 		
 		Assertions.assertThrows(ValidationException.class, () -> transacaoRules.validateDeposito(transacao), "valor nao pode ser nulo");
@@ -72,6 +75,8 @@ public class TransacaoRulesTest {
 	
 	@Test
 	public void validateDepositoErrorValorMenorQueZeroTest() {
+		Mockito.when(contaService.consulta(transacao.getIdConta())).thenReturn(conta);
+		
 		transacao.setValor(BigDecimal.valueOf(-100.00));
 		
 		Assertions.assertThrows(ValidationException.class, () -> transacaoRules.validateDeposito(transacao), "valor nao pode ser menor ou igual a zero");
@@ -79,9 +84,20 @@ public class TransacaoRulesTest {
 	
 	@Test
 	public void validateDepositoErrorValorZeroTest() {
+		Mockito.when(contaService.consulta(transacao.getIdConta())).thenReturn(conta);
+		
 		transacao.setValor(BigDecimal.ZERO);
 		
 		Assertions.assertThrows(ValidationException.class, () -> transacaoRules.validateDeposito(transacao), "valor nao pode ser menor ou igual a zero");
+	}
+	
+	@Test
+	public void validateDepositoErrorContaBloqueadaTest() {
+		conta.setFlagAtivo(false);
+		
+		Mockito.when(contaService.consulta(transacao.getIdConta())).thenReturn(conta);
+		
+		Assertions.assertThrows(ValidationException.class, () -> transacaoRules.validateDeposito(transacao), "transacao recusada, conta bloqueada");
 	}
 	
 	@Test
@@ -122,6 +138,8 @@ public class TransacaoRulesTest {
 	
 	@Test
 	public void validateSaqueErrorValorNullTest() {
+		Mockito.when(contaService.consulta(transacao.getIdConta())).thenReturn(conta);
+		
 		transacao.setValor(null);
 		
 		Assertions.assertThrows(ValidationException.class, () -> transacaoRules.validateSaque(transacao), "valor nao pode ser nulo");
@@ -131,6 +149,8 @@ public class TransacaoRulesTest {
 	
 	@Test
 	public void validateSaqueErrorValorMenorQueZeroTest() {
+		Mockito.when(contaService.consulta(transacao.getIdConta())).thenReturn(conta);
+		
 		transacao.setValor(BigDecimal.valueOf(-100.00));
 		
 		Assertions.assertThrows(ValidationException.class, () -> transacaoRules.validateSaque(transacao), "valor nao pode ser menor ou igual a zero");
@@ -140,6 +160,8 @@ public class TransacaoRulesTest {
 	
 	@Test
 	public void validateSaqueErrorValorZeroTest() {
+		Mockito.when(contaService.consulta(transacao.getIdConta())).thenReturn(conta);
+		
 		transacao.setValor(BigDecimal.ZERO);
 		
 		Assertions.assertThrows(ValidationException.class, () -> transacaoRules.validateSaque(transacao), "valor nao pode ser menor ou igual a zero");

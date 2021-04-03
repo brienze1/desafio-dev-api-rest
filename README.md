@@ -30,6 +30,8 @@ Passos concluidos de acordo com a ordem cronologica:
 	- Feature bloqueio de conta
 	- Feature extrato de transacoes
 *  Desenvolvimento do teste integrado com cucumber
+*  Modelagem da base de dados
+*  Desenvolvimento das entidades e comunicacao com a base de dados
 
 Proximos passos:
 
@@ -38,8 +40,6 @@ Proximos passos:
 *  Desenvolvimento dos testes unitarios para a camada de domain
 *  Desenvolvimento das regras de negocio
 *  Desenvolvimento dos testes unitarios para a camada de integration
-*  Modelagem da base de dados
-*  Desenvolvimento das entidades e comunicacao com a base de dados
 *  Refatoracao do codigo
 
 Feito por Luis Brienze. 

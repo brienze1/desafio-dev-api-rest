@@ -91,4 +91,19 @@ public class ContaServiceTest {
 		Assertions.assertEquals(BigDecimal.valueOf(1100.00), contaCadastrada.getSaldo());
 	}
 	
+	@Test
+	public void bloqueiaContaTest() {
+		Mockito.when(contaPersistence.busca(idConta)).thenReturn(Optional.of(contaCadastrada));
+		Mockito.when(contaPersistence.save(contaCadastrada)).thenReturn(contaCadastrada);
+		
+		Conta contaResponse = contaService.bloqueiaConta(idConta);
+		
+		Mockito.verify(contaPersistence).busca(idConta);
+		Mockito.verify(contaRules).validate(Optional.of(contaCadastrada));
+		Mockito.verify(contaRules).validateBloqueio(contaCadastrada);
+		Mockito.verify(contaPersistence).save(contaCadastrada);
+		
+		Assertions.assertNotNull(contaResponse);
+	}
+	
 }

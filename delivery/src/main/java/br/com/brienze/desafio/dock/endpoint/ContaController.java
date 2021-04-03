@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -39,6 +40,15 @@ public class ContaController {
 	@GetMapping("/{id_conta}")
 	public ResponseEntity<ContaDto> consultaSaldo(@PathVariable(name = "id_conta", required = true) Long idConta) {
 		Conta contaCadastrada = contaService.consulta(idConta);
+		
+		ContaDto contaDtoCadastrada = contaParse.toContaDto(contaCadastrada);
+		
+		return new ResponseEntity<ContaDto>(contaDtoCadastrada, HttpStatus.OK);
+	}
+	
+	@PatchMapping("/bloqueios/{id_conta}")
+	public ResponseEntity<ContaDto> bloqueiaConta(@PathVariable(name = "id_conta", required = true) Long idConta) {
+		Conta contaCadastrada = contaService.bloqueiaConta(idConta);
 		
 		ContaDto contaDtoCadastrada = contaParse.toContaDto(contaCadastrada);
 		
