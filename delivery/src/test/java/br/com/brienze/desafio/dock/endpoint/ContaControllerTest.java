@@ -74,4 +74,17 @@ public class ContaControllerTest {
 		Assertions.assertNotNull(contaDtoResponse.getBody());
 	}
 	
+	@Test
+	public void bloqueioTest() {
+		Mockito.when(contaService.bloqueiaConta(idConta)).thenReturn(contaResponse);
+		Mockito.when(contaParse.toContaDto(contaResponse)).thenReturn(contaDtoResponse);
+		
+		ResponseEntity<ContaDto> contaDtoResponse = contaController.bloqueiaConta(idConta);
+		
+		Mockito.verify(contaService).bloqueiaConta(idConta);
+		Mockito.verify(contaParse).toContaDto(contaResponse);
+		
+		Assertions.assertNotNull(contaDtoResponse.getBody());
+	}
+	
 }

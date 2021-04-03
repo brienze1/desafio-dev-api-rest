@@ -1,5 +1,8 @@
 package br.com.brienze.desafio.dock.parse;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.stereotype.Component;
 
 import br.com.brienze.desafio.dock.dto.TransacaoDto;
@@ -32,6 +35,18 @@ public class TransacaoParse {
 		}
 		
 		return transacaoDto;
+	}
+
+	public List<TransacaoDto> toTransacoesDto(List<Transacao> transacoes) {
+		List<TransacaoDto> transacoesDto = new ArrayList<>();
+		
+		if(transacoes != null) {
+			for (Transacao transacao : transacoes) {
+				transacoesDto.add(toTransacaoDto(transacao));
+			}
+		}
+		
+		return transacoesDto;
 	}
 
 	

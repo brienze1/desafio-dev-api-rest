@@ -1,5 +1,8 @@
 package br.com.brienze.desafio.dock.parse;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.stereotype.Component;
 
 import br.com.brienze.desafio.dock.entity.ContaEntity;
@@ -34,6 +37,18 @@ public class TransacaoEntityParse {
 		}
 		
 		return transacao;
+	}
+
+	public List<Transacao> toTransacoes(List<TransacaoEntity> transacoesEntity) {
+		List<Transacao> transacoes = new ArrayList<>();
+		
+		if(transacoesEntity != null) {
+			for (TransacaoEntity transacaoEntity : transacoesEntity) {
+				transacoes.add(toTransacao(transacaoEntity));
+			}
+		}
+		
+		return transacoes;
 	}
 
 }

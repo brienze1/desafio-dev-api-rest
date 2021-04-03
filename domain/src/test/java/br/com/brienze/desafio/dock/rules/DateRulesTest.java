@@ -47,7 +47,7 @@ public class DateRulesTest {
 		Assertions.assertThrows(
 				DateTimeParseException.class, 
 				() -> dateRules.validate(invalidDate), 
-				"Not a valid date (try using dd/MM/yyyy)");
+				"data deve ser informada no padrao dd/MM/yyyy");
 	}
 	
 }

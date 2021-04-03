@@ -1,8 +1,10 @@
 package br.com.brienze.desafio.dock.cucumber.steps;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -48,7 +50,7 @@ public class ExtratoDeContaTestSteps {
 
 	@Autowired
 	private TransacaoRepository transacaoRepository;
-
+	
 	private ResponseEntity<String> responseString;
 	private ResponseEntity<TransacaoDto> responseTransacao;
 	private ResponseEntity<String> response;
@@ -56,7 +58,6 @@ public class ExtratoDeContaTestSteps {
 	private TypeReference<List<TransacaoDto>> typeReferenceExtrato;
 	private Map<String, String> dataMap;
 	private HttpStatusCodeException e;
-	private DateTimeFormatter formatter;
 	
 	@PostConstruct
 	public void init() {
@@ -65,8 +66,6 @@ public class ExtratoDeContaTestSteps {
 		typeReferenceExtrato = new TypeReference<List<TransacaoDto>>() {};
 		
 		dataMap = new HashMap<>();
-		
-		formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy"); 
 	}
 
 	@Dado("que a pessoa dos dados abaixo foi cadastrada anteriormente no sistema")
@@ -83,7 +82,7 @@ public class ExtratoDeContaTestSteps {
 
 	@Dado("o {string} gerado tenha sido armazenado")
 	public void o_gerado_tenha_sido_armazenado(String campo) throws JsonMappingException, JsonProcessingException {
-		Map<String, Object> pessoaMap = mapper.readValue(mapper.writeValueAsString(responseString.getBody()), typeReference);
+		Map<String, Object> pessoaMap = mapper.readValue(responseString.getBody(), typeReference);
 
 		dataMap.put(campo, String.valueOf(pessoaMap.get(campo)));
 	}
@@ -93,7 +92,9 @@ public class ExtratoDeContaTestSteps {
 		Map<String, String> contaMap = dataTable.asMap(String.class, String.class);
 
 		ContaDto contaDto = new ContaDto();
-		contaDto.setLimiteSaqueDiario(BigDecimal.valueOf(Double.valueOf(contaMap.get("limite_saque_diario"))));
+		if(contaMap.containsKey("limite_saque_diario")) {
+			contaDto.setLimiteSaqueDiario(BigDecimal.valueOf(Double.valueOf(contaMap.get("limite_saque_diario"))));
+		}
 		contaDto.setTipoConta(Integer.valueOf(contaMap.get("tipo_conta")));
 		contaDto.setIdPessoa(Long.valueOf(dataMap.get("id_pessoa")));
 
@@ -110,18 +111,18 @@ public class ExtratoDeContaTestSteps {
 				transacaoDto.setValor(BigDecimal.valueOf(Double.valueOf(transacaoMap.get("valor"))));
 				transacaoDto.setIdConta(Long.valueOf(dataMap.get("id_conta")));
 				
-				responseTransacao = exchange("/v1/contas/" + transacaoMap.get("tipo_transacao") + "s", null, HttpMethod.POST, TransacaoDto.class);
+				responseTransacao = exchange("/v1/transacoes/" + transacaoMap.get("tipo_transacao") + "s", transacaoDto, HttpMethod.POST, TransacaoDto.class);
 				
 				Optional<TransacaoEntity> transacaoEntity = transacaoRepository.findById(responseTransacao.getBody().getIdTransacao());
 				
-				LocalDateTime data = LocalDateTime.parse(transacaoMap.get("data"), formatter);
+				LocalDateTime data = parseDate(transacaoMap.get("data"));
 				LocalDateTime dataTransacao = LocalDateTime.of(data.getYear(), 
 						data.getMonth(), 
 						data.getDayOfMonth(), 
-						transacaoEntity.get().getDataTransacao().getHour(),
-						transacaoEntity.get().getDataTransacao().getMinute(),
-						transacaoEntity.get().getDataTransacao().getSecond(),
-						transacaoEntity.get().getDataTransacao().getNano());
+						12,
+						0,
+						0,
+						0);
 				
 				transacaoEntity.get().setDataTransacao(dataTransacao);
 				transacaoRepository.save(transacaoEntity.get());
@@ -136,8 +137,12 @@ public class ExtratoDeContaTestSteps {
 
 	@Quando("for solicitado o extrato do id_conta reservado com os parametros abaixo")
 	public void for_solicitado_o_extrato_do_id_conta_reservado_com_os_parametros_abaixo(DataTable dataTable) {
+		Map<String, String> parametrosMap = dataTable.asMap(String.class, String.class);
+		
+		String parametros = montaQuery(parametrosMap);
+		
 		try {
-			response = exchange("/v1/contas/" + dataMap.get("id_conta"), null, HttpMethod.GET, String.class);
+			response = exchange("/v1/transacoes/extratos/" + dataMap.get("id_conta") + parametros, null, HttpMethod.GET, String.class);
 			
 			Assert.assertNotNull(response);
 		} catch(HttpStatusCodeException ex) {
@@ -154,9 +159,9 @@ public class ExtratoDeContaTestSteps {
 		for (Map<String, String> transacaoMap : transacaoMaps) {
 			int contador = 0;
 			for (TransacaoDto transacaoDto : transacoesDto) {
-				boolean valid = false;
+				boolean valid = true;
 				
-				LocalDateTime data = LocalDateTime.parse(transacaoMap.get("data"));
+				LocalDateTime data = parseDate(transacaoMap.get("data"));
 				if(transacaoDto.getDataTransacao().getDayOfMonth() != data.getDayOfMonth()) {
 					valid = false;
 				}
@@ -173,7 +178,7 @@ public class ExtratoDeContaTestSteps {
 					contador++;
 				}
 			}
-			Assert.assertEquals(transacaoMap.get("quantidade"), contador);
+			Assert.assertEquals(transacaoMap.get("quantidade"), String.valueOf(contador));
 		}
 	}
 
@@ -182,7 +187,7 @@ public class ExtratoDeContaTestSteps {
 		List<TransacaoDto> transacoesDto = mapper.readValue(response.getBody(), typeReferenceExtrato);
 		
 		for (TransacaoDto transacaoDto : transacoesDto) {
-			Assert.assertEquals(dataMap.get("id_conta"), transacaoDto.getIdConta());
+			Assert.assertEquals(dataMap.get("id_conta"), transacaoDto.getIdConta().toString());
 		}
 	}
 
@@ -202,6 +207,57 @@ public class ExtratoDeContaTestSteps {
 
 		Assert.assertEquals(mensagem, errorMap.get("message"));
 	}
+	
+	private String montaQuery(Map<String, String> mapa) {
+		String query = "";
+		
+		if(mapa.get("data_inicio") != null && !mapa.get("data_inicio").isBlank()) {
+			if(query.isBlank()) {
+				query = "?";
+			} else {
+				query += "&";
+			}
+			query += "data_inicio=" + mapa.get("data_inicio");
+		}
+		if(mapa.get("data_fim") != null && !mapa.get("data_fim").isBlank()) {
+			if(query.isBlank()) {
+				query = "?";
+			} else {
+				query += "&";
+			}
+			query += "data_fim=" + mapa.get("data_fim");
+		}
+		if(mapa.get("quantidade") != null && !mapa.get("quantidade").isBlank()) {
+			if(query.isBlank()) {
+				query = "?";
+			} else {
+				query += "&";
+			}
+			query += "quantidade=" + mapa.get("quantidade");
+		}
+		if(mapa.get("pagina") != null && !mapa.get("pagina").isBlank()) {
+			if(query.isBlank()) {
+				query = "?";
+			} else {
+				query += "&";
+			}
+			query += "pagina=" + mapa.get("pagina");
+		}
+		
+		return query;
+	}
+	
+	private DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+	
+    private LocalDateTime parseDate(String dateStr) {
+        LocalDate data = null;
+    	try {
+            data = LocalDate.parse(dateStr, this.dateFormatter);
+        } catch (DateTimeParseException e) {
+        	throw new DateTimeParseException("data deve ser informada no padrao dd/MM/yyyy", dateStr, e.getErrorIndex());
+        }
+        return LocalDateTime.of(data.getYear(), data.getMonthValue(), data.getDayOfMonth(), 12, 0, 0);
+    }
 
 	private <T> ResponseEntity<T> exchange(String path, Object request, HttpMethod method, Class<T> clazz) {
 		HttpHeaders headers = new HttpHeaders();

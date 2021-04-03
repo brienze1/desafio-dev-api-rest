@@ -16,6 +16,9 @@ public class TransacaoRules {
 	@Autowired
 	private ContaService contaService;
 	
+	@Autowired
+	private DateRules dateRules;
+	
 	public boolean validateDeposito(Transacao transacao) {
 		validate(transacao);
 	
@@ -57,6 +60,28 @@ public class TransacaoRules {
 			throw new ValidationException("valor nao pode ser menor ou igual a zero");
 		}
 		
+	}
+
+	public boolean validateParametrosExtrato(Long idConta, String dataFimString, String dataInicioString, Integer quantidade, Integer pagina) {
+		if(idConta == null) {
+			throw new ValidationException("id_conta nao pode ser nulo");
+		}
+		
+		contaService.consulta(idConta);
+		
+		if(dataFimString != null && dataInicioString != null && dateRules.validate(dataInicioString).isBefore(dateRules.validate(dataFimString))) {
+			throw new ValidationException("data_inicio deve vir antes da data_fim");
+		}
+		
+		if(pagina != null && pagina < 0) {
+			throw new ValidationException("pagina deve ser maior ou igual a zero");
+		}
+
+		if(quantidade != null && quantidade < 0) {
+			throw new ValidationException("quantidade deve ser maior ou igual a zero");
+		}
+		
+		return true;
 	}
 
 }

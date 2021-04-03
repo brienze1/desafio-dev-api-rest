@@ -32,14 +32,15 @@ Passos concluidos de acordo com a ordem cronologica:
 *  Desenvolvimento do teste integrado com cucumber
 *  Modelagem da base de dados
 *  Desenvolvimento das entidades e comunicacao com a base de dados
-
-Proximos passos:
-
 *  Desenvolvimento dos testes unitarios para a camada de delivery
 *  Desenvolvimento do controller
 *  Desenvolvimento dos testes unitarios para a camada de domain
 *  Desenvolvimento das regras de negocio
 *  Desenvolvimento dos testes unitarios para a camada de integration
+
+Proximos passos:
+
+*  Criar Dockerfile
 *  Refatoracao do codigo
 
 Feito por Luis Brienze. 

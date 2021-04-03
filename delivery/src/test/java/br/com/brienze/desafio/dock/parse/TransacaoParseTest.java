@@ -2,6 +2,8 @@ package br.com.brienze.desafio.dock.parse;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -21,6 +23,7 @@ public class TransacaoParseTest {
 	
 	private Transacao transacao;
 	private TransacaoDto transacaoDto;
+	private List<Transacao> transacoes;
 
 	@BeforeEach
 	public void init() {
@@ -35,6 +38,9 @@ public class TransacaoParseTest {
 		transacaoDto.setIdConta(Long.valueOf(123));
 		transacaoDto.setIdTransacao(Long.valueOf(123));
 		transacaoDto.setValor(BigDecimal.valueOf(100.00));
+		
+		transacoes = new ArrayList<>();
+		transacoes.add(transacao);
 	}
 	
 	@Test
@@ -73,6 +79,26 @@ public class TransacaoParseTest {
 		TransacaoDto transacaoDto = transacaoParse.toTransacaoDto(transacao);
 		
 		Assertions.assertNotNull(transacaoDto);
+	}
+	
+	@Test
+	public void toTransacoesDtoTest() {
+		List<TransacaoDto> transacoesDto = transacaoParse.toTransacoesDto(transacoes);
+		
+		Assertions.assertNotNull(transacoesDto);
+		Assertions.assertEquals(transacao.getIdConta(), transacoesDto.get(0).getIdConta());
+		Assertions.assertEquals(transacao.getIdTransacao(), transacoesDto.get(0).getIdTransacao());
+		Assertions.assertEquals(transacao.getDataTransacao(), transacoesDto.get(0).getDataTransacao());
+		Assertions.assertEquals(transacao.getValor(), transacoesDto.get(0).getValor());
+	}
+	
+	@Test
+	public void toTransacoesDtoNullTest() {
+		transacoes = null;
+		
+		List<TransacaoDto> transacoesDto = transacaoParse.toTransacoesDto(transacoes);
+		
+		Assertions.assertNotNull(transacoesDto);
 	}
 	
 }

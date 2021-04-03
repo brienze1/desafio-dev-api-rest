@@ -1,5 +1,8 @@
 package br.com.brienze.desafio.dock.endpoint;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -31,6 +34,13 @@ public class TransacoesControllerTest {
 	private Transacao transacao;
 	private Transacao transacaoRealizada;
 	private TransacaoDto transacaoDtoRealizada;
+	private Long idConta;
+	private String dataInicio;
+	private String dataFim;
+	private Integer quantidade;
+	private Integer pagina;
+	private List<Transacao> transacoes;
+	private List<TransacaoDto> transacoesDto;
 	
 	@BeforeEach
 	public void init() {
@@ -41,6 +51,16 @@ public class TransacoesControllerTest {
 		transacaoRealizada = new Transacao();
 		
 		transacaoDtoRealizada = new TransacaoDto();
+		
+		transacoes = new ArrayList<>();
+
+		transacoesDto = new ArrayList<>();
+		
+		idConta = Long.valueOf(123);
+		dataFim = "25/01/1995";
+		dataInicio = "25/02/1996";
+		quantidade = 1;
+		pagina = 1;
 	}
 	
 	@Test
@@ -71,6 +91,19 @@ public class TransacoesControllerTest {
 		Mockito.verify(transacaoParse).toTransacaoDto(transacaoRealizada);
 		
 		Assertions.assertNotNull(transacaoResponse);
+	}
+	
+	@Test
+	public void extratoTest() {
+		Mockito.when(transacaoService.consulta(idConta, dataInicio, dataFim, quantidade, pagina)).thenReturn(transacoes);
+		Mockito.when(transacaoParse.toTransacoesDto(transacoes)).thenReturn(transacoesDto);
+		
+		ResponseEntity<List<TransacaoDto>> transacoesResponse = transacoesController.consultaExtrato(idConta, dataInicio, dataFim, quantidade, pagina);
+		
+		Mockito.verify(transacaoService).consulta(idConta, dataInicio, dataFim, quantidade, pagina);
+		Mockito.verify(transacaoParse).toTransacoesDto(transacoes);
+		
+		Assertions.assertNotNull(transacoesResponse);
 	}
 	
 }

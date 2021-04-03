@@ -2,6 +2,8 @@ package br.com.brienze.desafio.dock.parse;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -22,6 +24,7 @@ public class TransacaoEntityParseTest {
 	
 	private Transacao transacao;
 	private TransacaoEntity transacaoEntity;
+	private List<TransacaoEntity> transacoesEntity;
 	
 	@BeforeEach
 	public void init() {
@@ -37,6 +40,9 @@ public class TransacaoEntityParseTest {
 		transacaoEntity.getConta().setIdConta(Long.valueOf(123));
 		transacaoEntity.setIdTransacao(Long.valueOf(123));
 		transacaoEntity.setValor(BigDecimal.valueOf(100.00));
+		
+		transacoesEntity = new ArrayList<>();
+		transacoesEntity.add(transacaoEntity);
 	}
 	
 	@Test
@@ -75,6 +81,28 @@ public class TransacaoEntityParseTest {
 		TransacaoEntity transacaoEntity = transacaoParse.toTransacaoEntity(transacao);
 
 		Assertions.assertNotNull(transacaoEntity);
+	}
+	
+	@Test
+	public void toTransacoesTest() {
+		List<Transacao> transacoes = transacaoParse.toTransacoes(transacoesEntity);
+		
+		Assertions.assertNotNull(transacoes);
+		Assertions.assertFalse(transacoes.isEmpty());
+		Assertions.assertEquals(transacaoEntity.getConta().getIdConta(), transacoes.get(0).getIdConta());
+		Assertions.assertEquals(transacaoEntity.getIdTransacao(), transacoes.get(0).getIdTransacao());
+		Assertions.assertEquals(transacaoEntity.getDataTransacao(), transacoes.get(0).getDataTransacao());
+		Assertions.assertEquals(transacaoEntity.getValor(), transacoes.get(0).getValor());
+	}
+	
+	@Test
+	public void toTransacoesNullTest() {
+		transacoesEntity = null;
+		
+		List<Transacao> transacoes = transacaoParse.toTransacoes(transacoesEntity);
+		
+		Assertions.assertNotNull(transacoes);
+		Assertions.assertTrue(transacoes.isEmpty());
 	}
 	
 }

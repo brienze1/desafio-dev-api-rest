@@ -347,7 +347,7 @@ Funcionalidade: Teste de extrado de conta
 		|	data_fim	|				|
 		|	quantidade	|				|
 		|	pagina		|				|
-		Entao deve ser retornado uma mensagem de erro com o seguinte texto "id_conta nao encontrado"
+		Entao deve ser retornado uma mensagem de erro com o seguinte texto "id_conta nao cadastrado no sistema"
 		E o status da chamada de extrato retornado deve ser 404
 	
 	Cenario: Extrato nao retornado data inicio depois da data fim
@@ -409,7 +409,7 @@ Funcionalidade: Teste de extrado de conta
 		|	data_fim	|				|
 		|	quantidade	|				|
 		|	pagina		|				|
-		Entao deve ser retornado uma mensagem de erro com o seguinte texto "data_incio deve ser informada no padrao dd/MM/yyyy"
+		Entao deve ser retornado uma mensagem de erro com o seguinte texto "data deve ser informada no padrao dd/MM/yyyy"
 		E o status da chamada de extrato retornado deve ser 500
 	
 	Cenario: Extrato nao retornado data fim fora do padrao
@@ -440,7 +440,7 @@ Funcionalidade: Teste de extrado de conta
 		|	data_fim	|	25-01-2021	|
 		|	quantidade	|				|
 		|	pagina		|				|
-		Entao deve ser retornado uma mensagem de erro com o seguinte texto "data_fim deve ser informada no padrao dd/MM/yyyy"
+		Entao deve ser retornado uma mensagem de erro com o seguinte texto "data deve ser informada no padrao dd/MM/yyyy"
 		E o status da chamada de extrato retornado deve ser 500
 	
 	Cenario: Extrato nao retornado quantidade menor que zero

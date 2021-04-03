@@ -17,9 +17,9 @@ public class DateRules {
     	try {
             data = LocalDate.parse(dateStr, this.dateFormatter);
         } catch (DateTimeParseException e) {
-        	throw new DateTimeParseException("data_nascimento deve ser informada no padrao dd/MM/yyyy", dateStr, e.getErrorIndex());
+        	throw new DateTimeParseException("data deve ser informada no padrao dd/MM/yyyy", dateStr, e.getErrorIndex());
         }
-        return LocalDateTime.of(data.getYear(), data.getMonthValue(), data.getDayOfMonth(), 0, 0);
+        return LocalDateTime.of(data.getYear(), data.getMonthValue(), data.getDayOfMonth(), 0, 0, 0);
     }
     
 }

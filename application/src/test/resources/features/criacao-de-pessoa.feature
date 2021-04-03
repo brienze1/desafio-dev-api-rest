@@ -95,5 +95,5 @@ Funcionalidade: Teste de criacao de pessoa
 		|	cpf				|	12345678912	|
 		|	data_nascimento	|	25-01-1995		|
 		Quando for solicitada a criacao da pessoa
-		Entao deve ser retornado a mensagem de erro "data_nascimento deve ser informada no padrao dd/MM/yyyy"
+		Entao deve ser retornado a mensagem de erro "data deve ser informada no padrao dd/MM/yyyy"
 		E o status retornado deve ser 500
