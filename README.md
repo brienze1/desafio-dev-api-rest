@@ -16,6 +16,16 @@ A documentação e testes da api, pode ser utilizado a rota do swagger abaixo:
 http://localhost:8085/v2/api-docs
 http://localhost:8085/swagger-ui.html
 
+Para a base de dados foi utilizado o H2 (base em memoria utilizado para desenvolvimento local). 
+O script de criacao da base esta localizado no serguinte arquivo: ./appliction/src/main/resources/data.sql
+Com a aplicacao rodando é possivel consultar, alterar e deletar o conteudo da base na rota abaixo utilizando comandnos em SQL:
+http://localhost:8085/h2-console
+
+O dockerfile para gerar a imagem dockerizada foi criado e esta na pasta principal do projeto, a imagem gerada pode ser visualizada neste link:
+https://hub.docker.com/repository/docker/lfbrienze/desafio
+
+Foi feito o desenho de uma utilizacao da aws para implementar a api, o desenho foi feito com a utilizacao do draw.io e se encontra na pasta principal do projeto.
+
 Passos concluidos de acordo com a ordem cronologica:
 
 *  Criacao da casca do projeto (com spring boot)
