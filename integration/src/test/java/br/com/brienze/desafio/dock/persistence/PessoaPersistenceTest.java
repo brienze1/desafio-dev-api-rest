@@ -1,5 +1,7 @@
 package br.com.brienze.desafio.dock.persistence;
 
+import java.util.Optional;
+
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -21,7 +23,7 @@ public class PessoaPersistenceTest {
 	private PessoaPersistence pessoaPersistence;
 	
 	@Mock
-	private PessoaEntityParse pessoaEntityParse;
+	private PessoaEntityParse pessoaParse;
 	
 	@Mock
 	private PessoaRepository pessoaRepository;
@@ -30,6 +32,7 @@ public class PessoaPersistenceTest {
 	private PessoaEntity pessoaEntity;
 	private PessoaEntity pessoaEntitySaved;
 	private Pessoa pessoaSaved;
+	private Long idPessoa;
 	
 	@BeforeEach
 	public void init() {
@@ -40,21 +43,37 @@ public class PessoaPersistenceTest {
 		pessoaEntitySaved = new PessoaEntity();
 
 		pessoaSaved = new Pessoa();
+		
+		idPessoa = Long.valueOf(123);
 	}
 	
 	@Test
 	public void saveTest() {
-		Mockito.when(pessoaEntityParse.toPessoaEntity(pessoa)).thenReturn(pessoaEntity);
+		Mockito.when(pessoaParse.toPessoaEntity(pessoa)).thenReturn(pessoaEntity);
 		Mockito.when(pessoaRepository.save(pessoaEntity)).thenReturn(pessoaEntitySaved);
-		Mockito.when(pessoaEntityParse.toPessoa(pessoaEntitySaved)).thenReturn(pessoaSaved);
+		Mockito.when(pessoaParse.toPessoa(pessoaEntitySaved)).thenReturn(pessoaSaved);
 		
 		Pessoa pessoaResponse = pessoaPersistence.save(pessoa);
 		
-		Mockito.verify(pessoaEntityParse).toPessoaEntity(pessoa);
+		Mockito.verify(pessoaParse).toPessoaEntity(pessoa);
 		Mockito.verify(pessoaRepository).save(pessoaEntity);
-		Mockito.verify(pessoaEntityParse).toPessoa(pessoaEntitySaved);
+		Mockito.verify(pessoaParse).toPessoa(pessoaEntitySaved);
 		
 		Assertions.assertNotNull(pessoaResponse);
+	}
+	
+	@Test
+	public void buscaTest() {
+		Mockito.when(pessoaRepository.findById(idPessoa)).thenReturn(Optional.of(pessoaEntity));
+		Mockito.when(pessoaParse.toPessoa(Optional.of(pessoaEntity))).thenReturn(Optional.of(pessoaSaved));
+		
+		Optional<Pessoa> pessoaResponse = pessoaPersistence.busca(idPessoa);
+		
+		Mockito.verify(pessoaRepository).findById(idPessoa);
+		Mockito.verify(pessoaParse).toPessoa(Optional.of(pessoaEntity));
+		
+		Assertions.assertNotNull(pessoaResponse);
+		Assertions.assertTrue(pessoaResponse.isPresent());
 	}
 	
 }

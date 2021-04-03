@@ -1,5 +1,7 @@
 package br.com.brienze.desafio.dock.rules;
 
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -45,9 +47,9 @@ public class PessoaRules {
 	}
 
 	public boolean validate(Long idPessoa) {
-		Pessoa pessoa = pessoaService.busca(idPessoa);
+		Optional<Pessoa> pessoa = pessoaService.busca(idPessoa);
 		
-		if(pessoa == null) {
+		if(pessoa.isEmpty()) {
 			throw new NotFoundException("id_pessoa nao cadastrado no sistema");
 		}
 		

@@ -2,6 +2,7 @@ package br.com.brienze.desafio.dock.parse;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.Optional;
 import java.util.UUID;
 
 import org.junit.jupiter.api.Assertions;
@@ -53,7 +54,9 @@ public class PessoaEntityParseTest {
 	
 	@Test
 	public void toPessoaNullTest() {
-		Pessoa pessoa = pessoaParse.toPessoa(null);
+		pessoaEntity = null;
+		
+		Pessoa pessoa = pessoaParse.toPessoa(pessoaEntity);
 		
 		Assertions.assertNotNull(pessoa);
 	}
@@ -73,6 +76,27 @@ public class PessoaEntityParseTest {
 		Assertions.assertEquals(pessoa.getCpf(), pessoaEntity.getCpf());
 		Assertions.assertEquals(pessoa.getDataNascimento(), pessoaEntity.getDataNascimento().format(FORMAT));
 		Assertions.assertEquals(pessoa.getNome(), pessoaEntity.getNome());
+	}
+	
+	@Test
+	public void toPessoaOptionalTest() {
+		Optional<Pessoa> pessoa = pessoaParse.toPessoa(Optional.of(pessoaEntity));
+		
+		
+		Assertions.assertNotNull(pessoa);
+		Assertions.assertTrue(pessoa.isPresent());
+		Assertions.assertEquals(pessoaEntity.getIdPessoa(), pessoa.get().getIdPessoa());
+		Assertions.assertEquals(pessoaEntity.getCpf(), pessoa.get().getCpf());
+		Assertions.assertEquals(pessoaEntity.getDataNascimento().format(FORMAT), pessoa.get().getDataNascimento());
+		Assertions.assertEquals(pessoaEntity.getNome(), pessoa.get().getNome());
+	}
+	
+	@Test
+	public void toPessoaNotpresentOptionalTest() {
+		Optional<Pessoa> pessoa = pessoaParse.toPessoa(Optional.ofNullable(null));
+		
+		Assertions.assertNotNull(pessoa);
+		Assertions.assertFalse(pessoa.isPresent());
 	}
 	
 }

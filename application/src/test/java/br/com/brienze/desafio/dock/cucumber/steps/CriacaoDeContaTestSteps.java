@@ -23,6 +23,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import br.com.brienze.desafio.dock.dto.ContaDto;
 import br.com.brienze.desafio.dock.dto.PessoaDto;
+import br.com.brienze.desafio.dock.repository.ContaRepository;
 import br.com.brienze.desafio.dock.repository.PessoaRepository;
 import cucumber.api.java.pt.Dado;
 import cucumber.api.java.pt.Entao;
@@ -41,6 +42,9 @@ public class CriacaoDeContaTestSteps {
 	private ObjectMapper mapper;
 
 	@Autowired
+	private ContaRepository contaRepository;
+	
+	@Autowired
 	private PessoaRepository pessoaRepository;
 	
 	private ResponseEntity<String> responseString;
@@ -52,6 +56,7 @@ public class CriacaoDeContaTestSteps {
 	
 	@PostConstruct
 	public void init() {
+		contaRepository.deleteAll();
 		pessoaRepository.deleteAll();
 		
 		typeReference = new TypeReference<Map<String, Object>>() {};
@@ -112,31 +117,14 @@ public class CriacaoDeContaTestSteps {
 		}
 	}
 	
-//	@Quando("for solicitada a criacao da conta abaixo") 
-//	public void for_solicitada_a_criacao_da_conta_abaixo(DataTable dataTable) {
-//		Map<String, String> contaMap = dataTable.asMap(String.class, String.class);
-//		
-//		if(contaMap.containsKey("limite_saque_diario")) {
-//			contaDto.setLimiteSaqueDiario(BigDecimal.valueOf(Double.valueOf(contaMap.get("limite_saque_diario"))));
-//		}
-//		contaDto.setTipoConta(Integer.valueOf(contaMap.get("tipo_conta")));
-//		contaDto.setIdPessoa(Long.valueOf(contaMap.get("id_pessoa")));
-//		
-//		try {
-//			response = exchange("/v1/contas", contaDto, ContaDto.class);
-//			
-//			Assert.assertNotNull(response);
-//		} catch(HttpStatusCodeException ex) {
-//			e = ex;
-//		}
-//	}
-
 	@Entao("deve ser retornado o cadastro completo da conta com os campos") 
 	public void deve_ser_retornado_o_cadastro_completo_da_conta_com_os_campos(DataTable dataTable) {
 		Map<String, String> contaMap = dataTable.asMap(String.class, String.class);
 		
-		Assert.assertEquals(BigDecimal.valueOf(Double.valueOf(contaMap.get("limite_saque_diario"))), response.getBody().getLimiteSaqueDiario());
-		Assert.assertEquals(BigDecimal.valueOf(Double.valueOf(contaMap.get("saldo"))), response.getBody().getSaldo());
+		if(contaMap.containsKey("limite_saque_diario")) {
+			Assert.assertEquals(BigDecimal.valueOf(Double.valueOf(contaMap.get("limite_saque_diario"))), response.getBody().getLimiteSaqueDiario());
+		}
+		Assert.assertEquals(contaMap.get("saldo"), response.getBody().getSaldo().toString());
 		Assert.assertEquals(Integer.valueOf(contaMap.get("tipo_conta")), response.getBody().getTipoConta());
 	}
 
@@ -170,7 +158,8 @@ public class CriacaoDeContaTestSteps {
 	public void o_campo_deve_ser_nulo(String campo) throws JsonMappingException, JsonProcessingException {
 		Map<String, Object> contaMap = mapper.readValue(mapper.writeValueAsString(response.getBody()), typeReference);
 		   
-		Assert.assertFalse(contaMap.containsKey(campo));
+		Assert.assertTrue(contaMap.containsKey(campo));
+		Assert.assertNull(contaMap.get(campo));
 	}
 
 	@Entao("o codigo de status retornado deve ser {int}")

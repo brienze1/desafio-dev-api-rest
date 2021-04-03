@@ -2,6 +2,7 @@ package br.com.brienze.desafio.dock.parse;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.Optional;
 
 import org.springframework.stereotype.Component;
 
@@ -37,6 +38,14 @@ public class PessoaEntityParse {
 		}
 
 		return pessoa;
+	}
+
+	public Optional<Pessoa> toPessoa(Optional<PessoaEntity> pessoaEntity) {
+		if(pessoaEntity.isPresent()) {
+			return Optional.of(toPessoa(pessoaEntity.get()));
+		}
+		
+		return Optional.ofNullable(null);
 	}
 
 }

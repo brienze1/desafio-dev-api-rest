@@ -10,6 +10,7 @@ import org.mockito.Mockito;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import br.com.brienze.desafio.dock.adapter.ContaPersistenceAdapter;
+import br.com.brienze.desafio.dock.builder.ContaBuilder;
 import br.com.brienze.desafio.dock.entity.Conta;
 import br.com.brienze.desafio.dock.rules.ContaRules;
 
@@ -25,7 +26,11 @@ public class ContaSErviceTest {
 	@Mock
 	private ContaPersistenceAdapter contaPersistence;
 	
+	@Mock
+	private ContaBuilder contaBuilder;
+	
 	private Conta conta;
+	private Conta contaNova;
 	private Conta contaCadastrada;
 	
 	@BeforeEach
@@ -37,12 +42,14 @@ public class ContaSErviceTest {
 	
 	@Test
 	public void cadastroTest() {
-		Mockito.when(contaPersistence.save(conta)).thenReturn(contaCadastrada);
+		Mockito.when(contaBuilder.buildNovaConta(conta)).thenReturn(contaNova);
+		Mockito.when(contaPersistence.save(contaNova)).thenReturn(contaCadastrada);
 		
 		Conta contaResponse = contaService.cadastro(conta);
 		
 		Mockito.verify(contaRules).validate(conta);
-		Mockito.verify(contaPersistence).save(conta);
+		Mockito.verify(contaBuilder).buildNovaConta(conta);
+		Mockito.verify(contaPersistence).save(contaNova);
 		
 		Assertions.assertNotNull(contaResponse);
 	}

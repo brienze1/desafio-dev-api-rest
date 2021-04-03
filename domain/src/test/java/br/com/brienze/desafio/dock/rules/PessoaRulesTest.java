@@ -1,6 +1,7 @@
 package br.com.brienze.desafio.dock.rules;
 
 import java.time.format.DateTimeParseException;
+import java.util.Optional;
 import java.util.UUID;
 
 import org.junit.jupiter.api.Assertions;
@@ -13,7 +14,9 @@ import org.mockito.Mockito;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import br.com.brienze.desafio.dock.entity.Pessoa;
+import br.com.brienze.desafio.dock.exception.NotFoundException;
 import br.com.brienze.desafio.dock.exception.ValidationException;
+import br.com.brienze.desafio.dock.service.PessoaService;
 
 @ExtendWith(SpringExtension.class)
 public class PessoaRulesTest {
@@ -24,7 +27,11 @@ public class PessoaRulesTest {
 	@Mock
 	private DateRules dateRules;
 	
+	@Mock
+	private PessoaService pessoaService;
+	
 	private Pessoa pessoa;
+	private Long idPessoa;
 	
 	@BeforeEach
 	public void init() {
@@ -32,6 +39,8 @@ public class PessoaRulesTest {
 		pessoa.setCpf("12345678901");
 		pessoa.setDataNascimento("25/01/1995");
 		pessoa.setNome(UUID.randomUUID().toString());
+		
+		idPessoa = Long.valueOf(122);
 	}
 	
 	@Test
@@ -111,6 +120,26 @@ public class PessoaRulesTest {
 		Mockito.when(dateRules.validate(pessoa.getDataNascimento())).thenThrow(new DateTimeParseException("data_nascimento deve ser informada no padrao dd/MM/yyyy", pessoa.getDataNascimento(), 1));
 		
 		Assertions.assertThrows(DateTimeParseException.class, () -> pessoaRules.validate(pessoa), "data_nascimento deve ser informada no padrao dd/MM/yyyy");
+	}
+	
+	@Test
+	public void validateIdPessoaSuccessTest() {
+		Mockito.when(pessoaService.busca(idPessoa)).thenReturn(Optional.of(pessoa));
+		
+		boolean valid = pessoaRules.validate(idPessoa);
+		
+		Mockito.verify(pessoaService).busca(idPessoa);
+		
+		Assertions.assertTrue(valid);
+	}
+	
+	@Test
+	public void validateIdPessoaErrorTest() {
+		Mockito.when(pessoaService.busca(idPessoa)).thenReturn(Optional.ofNullable(null));
+		
+		Assertions.assertThrows(NotFoundException.class, () -> pessoaRules.validate(idPessoa), "id_pessoa nao cadastrado no sistema");
+
+		Mockito.verify(pessoaService).busca(idPessoa);
 	}
 
 }

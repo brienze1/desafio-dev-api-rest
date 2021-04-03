@@ -1,5 +1,7 @@
 package br.com.brienze.desafio.dock.persistence;
 
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -23,6 +25,13 @@ public class PessoaPersistence implements PessoaPersistenceAdapter {
 		PessoaEntity pessoaEntity = pessoaParse.toPessoaEntity(pessoa);
 		
 		PessoaEntity pessoaEntitySaved = pessoaRepository.save(pessoaEntity);
+		
+		return pessoaParse.toPessoa(pessoaEntitySaved);
+	}
+
+	@Override
+	public Optional<Pessoa> busca(Long idPessoa) {
+		Optional<PessoaEntity> pessoaEntitySaved = pessoaRepository.findById(idPessoa);
 		
 		return pessoaParse.toPessoa(pessoaEntitySaved);
 	}

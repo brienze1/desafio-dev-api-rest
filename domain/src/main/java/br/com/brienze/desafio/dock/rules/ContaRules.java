@@ -17,7 +17,7 @@ public class ContaRules {
 			throw new ValidationException("conta nao pode ser nula");
 		}
 		
-		if(conta.getLimiteSaqueDiario() == null || conta.getLimiteSaqueDiario().doubleValue() <= 0) {
+		if(conta.getLimiteSaqueDiario() != null && conta.getLimiteSaqueDiario().doubleValue() <= 0) {
 			throw new ValidationException("limite_saque_diario nao pode ser menor ou igual a zero");
 		}
 		

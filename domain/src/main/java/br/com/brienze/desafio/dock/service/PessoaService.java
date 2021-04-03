@@ -1,5 +1,7 @@
 package br.com.brienze.desafio.dock.service;
 
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -22,9 +24,8 @@ public class PessoaService {
 		return pessoaPersistence.save(pessoa);
 	}
 
-	public Pessoa busca(Long idPessoa) {
-		// TODO Auto-generated method stub
-		return null;
+	public Optional<Pessoa> busca(Long idPessoa) {
+		return pessoaPersistence.busca(idPessoa);
 	}
 
 }

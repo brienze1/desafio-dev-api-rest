@@ -5,38 +5,40 @@ import java.time.LocalDateTime;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-
-import org.hibernate.annotations.Parent;
 
 @Entity
 @Table(name="tb_conta")
 public class ContaEntity {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.SEQUENCE)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id_conta")
 	private Long idConta;
 
-	@Parent
-	private PessoaEntity idPessoa;
+	@ManyToOne(optional = false, fetch = FetchType.LAZY)
+    @JoinColumn(name="id_pessoa")
+	private PessoaEntity pessoa;
 	
-	@Column(name = "saldo", columnDefinition = "MONEY", nullable = false)
+	@Column(name = "saldo")
 	private BigDecimal saldo;
 
-	@Column(name = "limite_saque_diario", columnDefinition = "MONEY", nullable = false)
+	@Column(name = "limite_saque_diario")
 	private BigDecimal limiteSaqueDiario;
 
-	@Column(name = "flag_ativo", columnDefinition = "BOOLEAN", nullable = false)
+	@Column(name = "flag_ativo")
 	private Boolean flagAtivo;
 	
-	@Column(name = "tipo_conta", columnDefinition = "INTEGER", nullable = false)
+	@Column(name = "tipo_conta")
 	private Integer tipoConta;
 
-	@Column(name = "data_criacao", columnDefinition = "TIMESTAMP", nullable = false)
+	@Column(name = "data_criacao")
 	private LocalDateTime dataCriacao;
 
 	public Long getIdConta() {
@@ -45,11 +47,11 @@ public class ContaEntity {
 	public void setIdConta(Long idConta) {
 		this.idConta = idConta;
 	}
-	public PessoaEntity getIdPessoa() {
-		return idPessoa;
+	public PessoaEntity getPessoa() {
+		return pessoa;
 	}
-	public void setIdPessoa(PessoaEntity idPessoa) {
-		this.idPessoa = idPessoa;
+	public void setPessoa(PessoaEntity pessoa) {
+		this.pessoa = pessoa;
 	}
 	public BigDecimal getSaldo() {
 		return saldo;

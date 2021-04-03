@@ -22,7 +22,7 @@ Funcionalidade: Teste de criacao de conta
 		|	tipo_conta			|	1	|
 		Entao deve ser retornado o cadastro completo da conta com os campos
 		|	limite_saque_diario	|	100		|
-		|	saldo				|	0.00	|
+		|	saldo				|	0		|
 		|	tipo_conta			|	1		|
 		E o campo "id_conta" deve vir preenchido
 		E o campo "flag_ativo" deve vir preenchido com "true"
@@ -40,7 +40,7 @@ Funcionalidade: Teste de criacao de conta
 		|	tipo_conta			|	1	|
 		Entao deve ser retornado o cadastro completo da conta com os campos
 		|	tipo_conta			|	1		|
-		|	saldo				|	0.00	|
+		|	saldo				|	0		|
 		E o campo "id_conta" deve vir preenchido
 		E o campo "flag_ativo" deve vir preenchido com "true"
 		E o campo "id_pessoa" deve vir preenchido com o valor do campo "id_pessoa" reservado anteriormente

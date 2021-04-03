@@ -1,10 +1,13 @@
 package br.com.brienze.desafio.dock.entity;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -13,16 +16,35 @@ public class TransacaoEntity {
 
 	@Id
 	@Column(name = "id_transacao")
-	private Long id;
+	private Long idTransacao;
+	
+	@ManyToOne(optional = false)
+    @JoinColumn(name="id_conta")
+	private ContaEntity conta;
+	
+	@Column(name = "valor")
+	private BigDecimal valor;
 	
 	@Column(name = "data_transcao")
 	private LocalDateTime dataTransacao;
 
-	public Long getId() {
-		return id;
+	public Long getIdTransacao() {
+		return idTransacao;
 	}
-	public void setId(Long id) {
-		this.id = id;
+	public void setIdTransacao(Long idTransacao) {
+		this.idTransacao = idTransacao;
+	}
+	public ContaEntity getConta() {
+		return conta;
+	}
+	public void setConta(ContaEntity conta) {
+		this.conta = conta;
+	}
+	public BigDecimal getValor() {
+		return valor;
+	}
+	public void setValor(BigDecimal valor) {
+		this.valor = valor;
 	}
 	public LocalDateTime getDataTransacao() {
 		return dataTransacao;
