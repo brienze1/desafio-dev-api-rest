@@ -37,10 +37,10 @@ Passos concluidos de acordo com a ordem cronologica:
 *  Desenvolvimento dos testes unitarios para a camada de domain
 *  Desenvolvimento das regras de negocio
 *  Desenvolvimento dos testes unitarios para a camada de integration
+*  Criar Dockerfile
 
 Proximos passos:
 
-*  Criar Dockerfile
 *  Refatoracao do codigo
 
 Feito por Luis Brienze. 
