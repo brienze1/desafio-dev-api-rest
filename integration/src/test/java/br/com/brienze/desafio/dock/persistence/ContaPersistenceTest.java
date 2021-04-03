@@ -1,5 +1,7 @@
 package br.com.brienze.desafio.dock.persistence;
 
+import java.util.Optional;
+
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -30,6 +32,7 @@ public class ContaPersistenceTest {
 	private ContaEntity contaEntity;
 	private ContaEntity contaEntitySalva;
 	private Conta contaSalva;
+	private Long idConta;
 	
 	@BeforeEach
 	public void init() {
@@ -41,6 +44,8 @@ public class ContaPersistenceTest {
 		contaEntitySalva = new ContaEntity();
 		
 		contaSalva = new Conta();
+		
+		idConta = Long.valueOf(123);
 	}
 	
 	@Test
@@ -56,6 +61,20 @@ public class ContaPersistenceTest {
 		Mockito.verify(contaParse).toConta(contaEntitySalva);
 		
 		Assertions.assertNotNull(contaResponse);
+	}
+	
+	@Test
+	public void buscaTest() {
+		Mockito.when(contaRepository.findById(idConta)).thenReturn(Optional.of(contaEntity));
+		Mockito.when(contaParse.toConta(Optional.of(contaEntity))).thenReturn(Optional.of(contaSalva));
+		
+		Optional<Conta> contaResponse = contaPersistence.busca(idConta);
+		
+		Mockito.verify(contaRepository).findById(idConta);
+		Mockito.verify(contaParse).toConta(Optional.of(contaEntity));
+		
+		Assertions.assertNotNull(contaResponse);
+		Assertions.assertTrue(contaResponse.isPresent());
 	}
 	
 }

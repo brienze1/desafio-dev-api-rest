@@ -24,7 +24,7 @@ Funcionalidade: Teste de deposito em conta
 		E o valor deve ser 200.00
 		E o dado "data_transacao" deve vir preenchido
 		E o dado "id_conta" deve vir preenchido com o valor "id_conta" reservado
-		E o status da chamada retornado deve ser 201
+		E o status da chamada retornado deve ser 202
 	
 	Cenario: Deposito nao realizado valor menor que zero
 		Dado que foi cadastrada a seguinte pessoa anteriormente no sistema
@@ -73,5 +73,5 @@ Funcionalidade: Teste de deposito em conta
 		Dado que nao foi cadastrado nenhuma conta no sistema
 		E que seja reservado o "id_conta" "101"
 		Quando for solicitado o "deposito" de 200.0 reais para o id_conta reservado
-		Entao deve ser retornado um erro com a seguinte mensagem "id_conta nao encontrado"
+		Entao deve ser retornado um erro com a seguinte mensagem "id_conta nao cadastrado no sistema"
 		E o status da chamada retornado deve ser 404

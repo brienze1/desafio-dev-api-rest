@@ -1,5 +1,8 @@
 package br.com.brienze.desafio.dock.service;
 
+import java.math.BigDecimal;
+import java.util.Optional;
+
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -15,7 +18,7 @@ import br.com.brienze.desafio.dock.entity.Conta;
 import br.com.brienze.desafio.dock.rules.ContaRules;
 
 @ExtendWith(SpringExtension.class)
-public class ContaSErviceTest {
+public class ContaServiceTest {
 
 	@InjectMocks
 	private ContaService contaService;
@@ -32,12 +35,19 @@ public class ContaSErviceTest {
 	private Conta conta;
 	private Conta contaNova;
 	private Conta contaCadastrada;
+	private Long idConta;
+	private BigDecimal valor;
 	
 	@BeforeEach
 	public void init() {
 		conta = new Conta();
 		
 		contaCadastrada = new Conta();
+		contaCadastrada.setSaldo(BigDecimal.valueOf(1000.00));
+		
+		idConta = Long.valueOf(123);
+		
+		valor = BigDecimal.valueOf(100.00);
 	}
 	
 	@Test
@@ -52,6 +62,33 @@ public class ContaSErviceTest {
 		Mockito.verify(contaPersistence).save(contaNova);
 		
 		Assertions.assertNotNull(contaResponse);
+	}
+	
+	@Test
+	public void consultaTest() {
+		Mockito.when(contaPersistence.busca(idConta)).thenReturn(Optional.of(contaCadastrada));
+		
+		Conta contaResponse = contaService.consulta(idConta);
+		
+		Mockito.verify(contaPersistence).busca(idConta);
+		Mockito.verify(contaRules).validate(Optional.of(contaCadastrada));
+		
+		Assertions.assertNotNull(contaResponse);
+	}
+	
+	@Test
+	public void transacaoTest() {
+		Mockito.when(contaPersistence.busca(idConta)).thenReturn(Optional.of(contaCadastrada));
+		Mockito.when(contaPersistence.save(contaCadastrada)).thenReturn(contaCadastrada);
+		
+		Conta contaResponse = contaService.transacao(valor, idConta);
+		
+		Mockito.verify(contaPersistence).busca(idConta);
+		Mockito.verify(contaRules).validate(Optional.of(contaCadastrada));
+		Mockito.verify(contaPersistence).save(contaCadastrada);
+		
+		Assertions.assertNotNull(contaResponse);
+		Assertions.assertEquals(BigDecimal.valueOf(1100.00), contaCadastrada.getSaldo());
 	}
 	
 }

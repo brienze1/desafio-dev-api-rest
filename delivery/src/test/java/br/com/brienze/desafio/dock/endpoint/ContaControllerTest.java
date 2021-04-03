@@ -31,6 +31,7 @@ public class ContaControllerTest {
 	private Conta conta;
 	private Conta contaResponse;
 	private ContaDto contaDtoResponse;
+	private Long idConta;
 	
 	@BeforeEach
 	public void init() {
@@ -41,6 +42,8 @@ public class ContaControllerTest {
 		contaResponse = new Conta();
 		
 		contaDtoResponse = new ContaDto();
+		
+		idConta = Long.valueOf(123);
 	}
 	
 	@Test
@@ -53,6 +56,19 @@ public class ContaControllerTest {
 		
 		Mockito.verify(contaParse).toConta(contaDto);
 		Mockito.verify(contaService).cadastro(conta);
+		Mockito.verify(contaParse).toContaDto(contaResponse);
+		
+		Assertions.assertNotNull(contaDtoResponse.getBody());
+	}
+	
+	@Test
+	public void consultaSaldoTest() {
+		Mockito.when(contaService.consulta(idConta)).thenReturn(contaResponse);
+		Mockito.when(contaParse.toContaDto(contaResponse)).thenReturn(contaDtoResponse);
+		
+		ResponseEntity<ContaDto> contaDtoResponse = contaController.consultaSaldo(idConta);
+		
+		Mockito.verify(contaService).consulta(idConta);
 		Mockito.verify(contaParse).toContaDto(contaResponse);
 		
 		Assertions.assertNotNull(contaDtoResponse.getBody());

@@ -1,9 +1,12 @@
 package br.com.brienze.desafio.dock.rules;
 
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import br.com.brienze.desafio.dock.entity.Conta;
+import br.com.brienze.desafio.dock.exception.NotFoundException;
 import br.com.brienze.desafio.dock.exception.ValidationException;
 
 @Component
@@ -26,6 +29,14 @@ public class ContaRules {
 		}
 		
 		pessoaRules.validate(conta.getIdPessoa());
+		
+		return true;
+	}
+
+	public boolean validate(Optional<Conta> conta) {
+		if(conta.isEmpty()) {
+			throw new NotFoundException("id_conta nao cadastrado no sistema");
+		}
 		
 		return true;
 	}

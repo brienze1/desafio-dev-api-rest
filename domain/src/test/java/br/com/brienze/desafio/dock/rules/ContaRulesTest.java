@@ -2,6 +2,7 @@ package br.com.brienze.desafio.dock.rules;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.Optional;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -52,7 +53,9 @@ public class ContaRulesTest {
 	
 	@Test
 	public void validateErrorContaNulaTest() {
-		Assertions.assertThrows(ValidationException.class, () -> contaRules.validate(null), "conta nao pode ser nula");
+		conta = null;
+		
+		Assertions.assertThrows(ValidationException.class, () -> contaRules.validate(conta), "conta nao pode ser nula");
 	}
 	
 	@Test
@@ -74,6 +77,18 @@ public class ContaRulesTest {
 		Mockito.when(pessoaRules.validate(conta.getIdPessoa())).thenThrow(new NotFoundException("id_pessoa nao cadastrado no sistema"));
 		
 		Assertions.assertThrows(NotFoundException.class, () -> contaRules.validate(conta), "id_pessoa nao cadastrado no sistema");
+	}
+	
+	@Test
+	public void validateIdContaSuccessTest() {
+		boolean valid = contaRules.validate(Optional.of(conta));
+		
+		Assertions.assertTrue(valid);
+	}
+	
+	@Test
+	public void validateIdContaErrorTest() {
+		Assertions.assertThrows(NotFoundException.class, () -> contaRules.validate(Optional.ofNullable(null)), "id_conta nao cadastrado no sistema");
 	}
 	
 }

@@ -71,7 +71,7 @@ public class ConsultaSaldoTestSteps {
 
 	@Dado("que o {string} que foi gerado tenha sido guardado") 
 	public void que_o_que_foi_gerado_tenha_sido_guardado(String campo) throws JsonMappingException, JsonProcessingException {
-		Map<String, Object> pessoaMap = mapper.readValue(mapper.writeValueAsString(responseString.getBody()), typeReference);
+		Map<String, Object> pessoaMap = mapper.readValue(responseString.getBody(), typeReference);
 		
 		dataMap.put(campo, String.valueOf(pessoaMap.get(campo)));
 	}
@@ -94,7 +94,7 @@ public class ConsultaSaldoTestSteps {
 		transacaoDto.setValor(BigDecimal.valueOf(valor));
 		transacaoDto.setIdConta(Long.valueOf(dataMap.get("id_conta")));
 		
-		responseString = exchange("/v1/contas/depositos", null, HttpMethod.POST, String.class);
+		responseString = exchange("/v1/transacoes/depositos", transacaoDto, HttpMethod.POST, String.class);
 	}
 
 	@Dado("que foi solicitado o bloqueio do id_conta reservado")
@@ -104,7 +104,10 @@ public class ConsultaSaldoTestSteps {
 
 	@Dado("que nao exista uma conta com o id_conta {int} criada") 
 	public void que_nao_exista_uma_conta_com_o_id_conta_criada(Integer idConta) {
-		contaRepository.deleteById(Long.valueOf(idConta));
+		try {
+			contaRepository.deleteById(Long.valueOf(idConta));
+		} catch (Exception e) {
+		}
 	}
 
 	@Dado("que o {string} {string} seja reservado") 
@@ -127,8 +130,8 @@ public class ConsultaSaldoTestSteps {
 	public void devem_ser_retornados_os_dados_da_conta_com_os_campos(DataTable dataTable) {
 		Map<String, String> contaMap = dataTable.asMap(String.class, String.class);
 		
-		Assert.assertEquals(BigDecimal.valueOf(Double.valueOf(contaMap.get("limite_saque_diario"))), response.getBody().getLimiteSaqueDiario());
-		Assert.assertEquals(BigDecimal.valueOf(Double.valueOf(contaMap.get("saldo"))), response.getBody().getSaldo());
+		Assert.assertEquals(contaMap.get("limite_saque_diario"), response.getBody().getLimiteSaqueDiario().toString());
+		Assert.assertEquals(contaMap.get("saldo"), response.getBody().getSaldo().toString());
 		Assert.assertEquals(Integer.valueOf(contaMap.get("tipo_conta")), response.getBody().getTipoConta());
 	}
 

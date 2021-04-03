@@ -1,5 +1,8 @@
 package br.com.brienze.desafio.dock.service;
 
+import java.math.BigDecimal;
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -26,6 +29,22 @@ public class ContaService {
 		Conta contaNova = contaBuilder.buildNovaConta(conta);
 		
 		return contaPersistence.save(contaNova);
+	}
+
+	public Conta consulta(Long idConta) {
+		Optional<Conta> conta = contaPersistence.busca(idConta);
+		
+		contaRules.validate(conta);
+		
+		return conta.get();
+	}
+	
+	public Conta transacao(BigDecimal valor, Long idConta) {
+		Conta conta = consulta(idConta);
+		
+		conta.setSaldo(conta.getSaldo().add(valor));
+		
+		return contaPersistence.save(conta);
 	}
 
 }

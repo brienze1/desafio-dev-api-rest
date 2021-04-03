@@ -25,6 +25,7 @@ import br.com.brienze.desafio.dock.dto.ContaDto;
 import br.com.brienze.desafio.dock.dto.PessoaDto;
 import br.com.brienze.desafio.dock.repository.ContaRepository;
 import br.com.brienze.desafio.dock.repository.PessoaRepository;
+import br.com.brienze.desafio.dock.repository.TransacaoRepository;
 import cucumber.api.java.pt.Dado;
 import cucumber.api.java.pt.Entao;
 import cucumber.api.java.pt.Quando;
@@ -42,6 +43,9 @@ public class CriacaoDeContaTestSteps {
 	private ObjectMapper mapper;
 
 	@Autowired
+	private TransacaoRepository transacaoRepository;
+	
+	@Autowired
 	private ContaRepository contaRepository;
 	
 	@Autowired
@@ -56,6 +60,7 @@ public class CriacaoDeContaTestSteps {
 	
 	@PostConstruct
 	public void init() {
+		transacaoRepository.deleteAll();
 		contaRepository.deleteAll();
 		pessoaRepository.deleteAll();
 		

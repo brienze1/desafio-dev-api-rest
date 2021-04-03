@@ -2,6 +2,7 @@ package br.com.brienze.desafio.dock.parse;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.Optional;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -60,9 +61,32 @@ public class ContaEntityParseTest {
 	
 	@Test
 	public void toContaNullTest() {
-		Conta conta = contaParse.toConta(null);
+		contaEntity = null;
+		
+		Conta conta = contaParse.toConta(contaEntity);
 		
 		Assertions.assertNotNull(conta);
+	}
+	
+	@Test
+	public void toContaOtpionalTest() {
+		Optional<Conta> conta = contaParse.toConta(Optional.of(contaEntity));
+		
+		Assertions.assertEquals(contaEntity.getIdConta(), conta.get().getIdConta());
+		Assertions.assertEquals(contaEntity.getPessoa().getIdPessoa(), conta.get().getIdPessoa());
+		Assertions.assertEquals(contaEntity.getDataCriacao(), conta.get().getDataCriacao());
+		Assertions.assertEquals(contaEntity.getFlagAtivo(), conta.get().getFlagAtivo());
+		Assertions.assertEquals(contaEntity.getLimiteSaqueDiario(), conta.get().getLimiteSaqueDiario());
+		Assertions.assertEquals(contaEntity.getSaldo(), conta.get().getSaldo());
+		Assertions.assertEquals(contaEntity.getTipoConta(), conta.get().getTipoConta());
+	}
+	
+	@Test
+	public void toContaOtpionalNullTest() {
+		Optional<Conta> conta = contaParse.toConta(Optional.ofNullable(null));
+		
+		Assertions.assertNotNull(conta);
+		Assertions.assertTrue(conta.isEmpty());
 	}
 	
 	@Test

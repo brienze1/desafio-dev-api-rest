@@ -1,5 +1,7 @@
 package br.com.brienze.desafio.dock.persistence;
 
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -23,6 +25,13 @@ public class ContaPersistence implements ContaPersistenceAdapter {
 		ContaEntity contaEntity = contaParse.toContaEntity(conta);
 		
 		ContaEntity contaEntityCadastrada = contaRepository.save(contaEntity);
+		
+		return contaParse.toConta(contaEntityCadastrada);
+	}
+
+	@Override
+	public Optional<Conta> busca(Long idConta) {
+		Optional<ContaEntity> contaEntityCadastrada = contaRepository.findById(idConta);
 		
 		return contaParse.toConta(contaEntityCadastrada);
 	}

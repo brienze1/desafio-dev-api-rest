@@ -1,26 +1,13 @@
-package br.com.brienze.desafio.dock.dto;
+package br.com.brienze.desafio.dock.entity;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
+public class Transacao {
 
-import io.swagger.annotations.ApiModelProperty;
-
-public class TransacaoDto {
-
-	@ApiModelProperty(hidden = true)
-	@JsonProperty("id_transacao")
 	private Long idTransacao;
-	
-	@JsonProperty("id_conta")
 	private Long idConta;
-	
-	@JsonProperty("valor")
 	private BigDecimal valor;
-	
-	@ApiModelProperty(hidden = true)
-	@JsonProperty("data_transacao")
 	private LocalDateTime dataTransacao;
 	
 	public Long getIdTransacao() {

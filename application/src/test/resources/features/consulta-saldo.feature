@@ -18,7 +18,7 @@ Funcionalidade: Teste de consulta saldo de conta
 		E que o "id_conta" que foi gerado tenha sido guardado
 		Quando for solicitado a consulta de saldo para o id_conta reservado
 		Entao devem ser retornados os dados da conta com os campos
-		|	limite_saque_diario	|	100		|
+		|	limite_saque_diario	|	100.00	|
 		|	tipo_conta			|	1		|
 		|	saldo				|	0.00	|
 		E o valor do campo "id_conta" deve vir preenchido com o valor do campo "id_conta" reservado anteriormente
@@ -40,7 +40,7 @@ Funcionalidade: Teste de consulta saldo de conta
 		E que foi solicitado o deposito de 200.0 reais para o id_conta reservado
 		Quando for solicitado a consulta de saldo para o id_conta reservado
 		Entao devem ser retornados os dados da conta com os campos
-		|	limite_saque_diario	|	100		|
+		|	limite_saque_diario	|	100.00	|
 		|	tipo_conta			|	1		|
 		|	saldo				|	200.00	|
 		E o valor do campo "id_conta" deve vir preenchido com o valor do campo "id_conta" reservado anteriormente
@@ -63,7 +63,7 @@ Funcionalidade: Teste de consulta saldo de conta
 		E que foi solicitado o bloqueio do id_conta reservado
 		Quando for solicitado a consulta de saldo para o id_conta reservado
 		Entao devem ser retornados os dados da conta com os campos
-		|	limite_saque_diario	|	100		|
+		|	limite_saque_diario	|	100.00	|
 		|	tipo_conta			|	1		|
 		|	saldo				|	200.00	|
 		E o valor do campo "id_conta" deve vir preenchido com o valor do campo "id_conta" reservado anteriormente
@@ -76,5 +76,5 @@ Funcionalidade: Teste de consulta saldo de conta
 		Dado que nao exista uma conta com o id_conta 101 criada
 		E que o "id_conta" "101" seja reservado
 		Quando for solicitado a consulta de saldo para o id_conta reservado
-		Entao deve ser retornado um excessao com a mensagem "id_conta nao encontrado"
+		Entao deve ser retornado um excessao com a mensagem "id_conta nao cadastrado no sistema"
 		E o statuscode retornado deve ser 404

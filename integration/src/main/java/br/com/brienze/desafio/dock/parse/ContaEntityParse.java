@@ -1,5 +1,7 @@
 package br.com.brienze.desafio.dock.parse;
 
+import java.util.Optional;
+
 import org.springframework.stereotype.Component;
 
 import br.com.brienze.desafio.dock.entity.Conta;
@@ -40,6 +42,14 @@ public class ContaEntityParse {
 		}
 		
 		return conta;
+	}
+
+	public Optional<Conta> toConta(Optional<ContaEntity> contaEntity) {
+		if(contaEntity.isPresent()) {
+			return Optional.of(toConta(contaEntity.get()));
+		}
+		
+		return Optional.ofNullable(null);
 	}
 
 }

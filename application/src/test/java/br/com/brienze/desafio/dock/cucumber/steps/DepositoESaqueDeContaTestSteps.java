@@ -25,6 +25,7 @@ import br.com.brienze.desafio.dock.dto.ContaDto;
 import br.com.brienze.desafio.dock.dto.PessoaDto;
 import br.com.brienze.desafio.dock.dto.TransacaoDto;
 import br.com.brienze.desafio.dock.repository.ContaRepository;
+import br.com.brienze.desafio.dock.repository.TransacaoRepository;
 import cucumber.api.java.pt.Dado;
 import cucumber.api.java.pt.Entao;
 import cucumber.api.java.pt.Quando;
@@ -43,6 +44,9 @@ public class DepositoESaqueDeContaTestSteps {
 
 	@Autowired
 	private ContaRepository contaRepository;
+	
+	@Autowired
+	private TransacaoRepository transacaoRepository;
 
 	private ResponseEntity<String> responseString;
 	private ResponseEntity<TransacaoDto> response;
@@ -71,7 +75,7 @@ public class DepositoESaqueDeContaTestSteps {
 
 	@Dado("o {string} que foi gerado tenha sido guardado") 
 	public void o_que_foi_gerado_tenha_sido_guardado(String campo) throws JsonMappingException, JsonProcessingException {
-		Map<String, Object> pessoaMap = mapper.readValue(mapper.writeValueAsString(responseString.getBody()), typeReference);
+		Map<String, Object> pessoaMap = mapper.readValue(responseString.getBody(), typeReference);
 		
 		dataMap.put(campo, String.valueOf(pessoaMap.get(campo)));
 	}
@@ -95,12 +99,22 @@ public class DepositoESaqueDeContaTestSteps {
 
 	@Dado("que nao foi cadastrado nenhuma conta no sistema") 
 	public void que_nao_foi_cadastrado_nenhuma_conta_no_sistema() {
+		transacaoRepository.deleteAll();
 		contaRepository.deleteAll();
 	}
 
 	@Dado("que seja reservado o {string} {string}") 
 	public void que_seja_reservado_o(String campo, String valor) {
 		dataMap.put(campo, valor);
+	}
+	
+	@Dado("que foi  feita a solicitacao de deposito de {double} reais para o id_conta reservado")
+	public void que_foi__feita_a_solicitacao_de_deposito_de_reais_para_o_id_conta_reservado(Double valor) {
+		TransacaoDto transacaoDto = new TransacaoDto();
+		transacaoDto.setValor(BigDecimal.valueOf(valor));
+		transacaoDto.setIdConta(Long.valueOf(dataMap.get("id_conta")));
+		
+		responseString = exchange("/v1/transacoes/depositos", transacaoDto, HttpMethod.POST, String.class);
 	}
 	
 	@Quando("for solicitado o {string} de {double} reais para o id_conta reservado") 
@@ -110,7 +124,7 @@ public class DepositoESaqueDeContaTestSteps {
 		transacaoDto.setIdConta(Long.valueOf(dataMap.get("id_conta")));
 		
 		try {
-			response = exchange("/v1/contas/" + path + "s", null, HttpMethod.POST, TransacaoDto.class);
+			response = exchange("/v1/transacoes/" + path + "s", transacaoDto, HttpMethod.POST, TransacaoDto.class);
 			
 			Assert.assertNotNull(response);
 		} catch(HttpStatusCodeException ex) {
